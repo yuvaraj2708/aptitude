@@ -1,0 +1,51 @@
+<html><head>
+ <style>   
+ button{
+        background-color: #0066cc;
+        color:rgb(244, 233, 233);
+        }
+  
+ form{
+     padding-left: 500px;
+}
+h1{
+ padding-left:530px;
+}
+p{
+ padding-left: 450px;
+}
+
+</style>
+</head>
+<div class="container py-5">
+	<h1>Register</h1>
+	<form method="POST">
+        {% csrf_token %}
+        {% for message in messages %}
+        <div class="alert alert-success">
+            <a class="close" href="#" data-dismiss="alert"></a>
+               {{ message }}
+        </div>
+    
+    {% endfor %}
+        <label>username*</label><br>
+        <input type="text" name="username"><br><br>
+        <!-- <p class="p1">Required .120 characters of fewer. Letters,digits and @/./+/-/_ only.</p> -->
+        <label>Email_id*</label><br>
+        <input type="email" name="email"><br><br>
+        <label>Password*</label><br>
+        <input type="password" name="password"><br><br>
+        <label>Password Confirmation*</label><br>
+        <input type="password" name="password1"><br>
+        <ul>
+        <li>Your password can't be too similar to your personal information.</li>
+         <li>Your password must contain at least 8 characters.</li>
+         <li>Your password can't be a commonly used password.</li>
+         <li>Your password can't be entirely numeric.</li>
+         </ul>
+	   &nbsp;&nbsp;&nbsp; <button class="btn btn-primary" type="submit">Register</button>
+	</form>
+	<p class="text-center">If you already have an account, <a href="/login">login</a> instead.</p>
+</div>
+</html>
+

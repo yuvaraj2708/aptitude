@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+
+<h1>Javascript Quiz Game</h1>
+
+  <div>Time left = <span id="timer"></span></div>
+<div class="quiz-container">
+  <div id="quiz"></div>
+ 
+</div>
+<button id="previous">Previous</button>
+<button id="skip">skip</button>
+<button id="next" name="button1">Next</button>
+<a href="ans.html"><button id="submit">Submit Quiz</button></a>
+<div id="results"></div> 
+</div>
+<body>
+<style>
+@import url(https://fonts.googleapis.com/css?family=Work+Sans:300,600);
+
+body{
+	font-size: 19px;
+	font-family: 'Avenir', sans-serif;
+	color: #212020;
+  font-weight: 300;
+  text-align: center;
+  background-color: #f0f0ff;
+}
+.timer{
+  background-color:#2D3047;
+}
+
+.timer{
+  background-color:#6c40c0;
+  color:#EFD0CA;
+  font-size:20px;
+  text-align:center;
+}
+.right-title {
+width: 150px;
+text-align: right;
+float: right;
+color: #fff;
+}
+h1{
+  font-weight: 300px;
+  margin: 0px;
+  padding: 10px;
+  font-size: 30px;
+  background-color: #000;
+  color: #fff;
+
+;
+}
+.question{
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+.answers {
+  margin-bottom: 20px;
+  text-align: left;
+  display: inline-block;
+}
+.answers label{
+  display: block;
+  margin-bottom: 15px;
+}
+button{
+  font-family: 'Brandon Grotesque', sans-serif;
+	font-size: 15px;
+	background-color: #fff;
+	color: #212020;
+	border: 0px;
+	border-radius: 20px;
+	padding: 20px;
+ cursor: -webkit-grabbing; cursor: grabbing;
+	margin-bottom: 20px;
+  margin-top: 60px;
+}
+button:hover{
+	background-color: #e5acac;
+}
+
+.slide{
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.active-slide{
+  opacity: 2;
+  z-index: 3;
+}
+.quiz-container{
+  position: relative;
+  height: 200px;
+  margin-top: 40px;
+}
+
+</style>
+</body>
+<script>
+document.getElementById('timer').innerHTML = 11 + ":" + 11;
+startTimer();
+
+
+function startTimer() {
+  var presentTime = document.getElementById('timer').innerHTML;
+  var timeArray = presentTime.split(/[:]+/);
+  var m = timeArray[0];
+  var s = checkSecond((timeArray[1] - 1));
+  if(s==59){m=m-1}
+  if(m<0){
+    return
+  }
+  
+  document.getElementById('timer').innerHTML =
+    m + ":" + s;
+  console.log(m)
+  setTimeout(startTimer, 1000);
+  
+}
+
+function checkSecond(sec) {
+  if (sec < 10 && sec >= 0) {sec = "0" + sec}; // add zero in front of numbers < 10
+  if (sec < 0) {sec = "59"};
+  return sec;
+}
+(function() {
+  const myQuestions = [
+    {
+      question: "1.Inside which HTML element do we put the JavaScript?",
+      answers: {
+        a: "&lt;script&gt;",
+        b: "&lt;javascript&gt;",
+        c: "&lt;scripting&gt;",
+        d: "&lt;js&gt;"
+
+       },
+      correctAnswer: "a" 
+    
+    },
+    {
+      question: "2.Where is the correct place to insert a JavaScript?",
+      answers: {
+        a: "The &lt;head&gt; section",
+        b: "The &lt;body&gt; section",
+        c: "Both the &lt;head&gt; section and the &lt;body&gt; section are correct"
+      },
+      correctAnswer: "c"
+    },
+    {
+      question: "3.Water boils at 212 degrees on which temperature scale?",
+      answers: {
+        a: "Kelvin",
+        b: "Fahrenheit",
+        c: "Celsius",
+       
+      },
+      correctAnswer: "b"
+    },
+    {
+      question: "4.How do you write &quot;Hello World&quot; in an alert box?",
+      answers: {
+        a: "alertBox(&quot;Hello World&quot;);",
+        b: "msg(&quot;Hello World&quot;);",
+        c: "alert(&quot;Hello World&quot;);",
+       
+      },
+      correctAnswer: "c"
+    },
+     {
+      question: "5.What was Marilyn Monroe's natural hair colour?",
+      answers: {
+        a: "Ginger",
+        b: "Blue",
+        c: "Brown",
+       
+      },
+      correctAnswer: "a"
+    },
+     {
+      question: "6.Which two metals is pewter made from?",
+      answers: {
+        a: "Copper and Bronze",
+        b: "Tin and lead.",
+        c: "Zinc and gold",
+       
+      },
+      correctAnswer: "b"
+    },
+     {
+      question: "7.What takes place in Hong Kong's Happy Valley?",
+      answers: {
+        a: "Monkey racing",
+        b: "Dog racing.",
+        c: "Horse racing",
+       
+      },
+      correctAnswer: "c"
+    },
+     {
+      question: "8.Which country does the sport of pelato come from?",
+      answers: {
+        a: "Portugal",
+        b: "Spain",
+        c: "Italy",
+       
+      },
+      correctAnswer: "b"
+    },
+     {
+      question: "9.How many sides, in total, would three triangles and three rectangles have?",
+      answers: {
+        a: "21",
+        b: "19",
+        c: "12",
+       
+      },
+      correctAnswer: "a"
+    },
+     {
+      question: "10.What will the following code return: Boolean(10 &gt; 9)",
+      answers: {
+        a: "True",
+        b: "False",
+        c: "Null",
+       
+      },
+      correctAnswer: "a"
+    },
+    {
+    question: "11.Is JavaScript case-sensitive?",
+      answers: {
+        a: "No",
+        b: "Yes",
+        c: "Both",
+       
+      },
+      correctAnswer: "b"
+    },
+    {
+      question: "12.Who invented the bikini?",
+      answers: {
+        a: "Gianni Versace",
+        b: "Louis Reard.",
+        c: "Dolce Gabbana",
+       
+      },
+      correctAnswer: "b"
+    },
+
+  ];
+
+  function buildQuiz() {
+    // we'll need a place to store the HTML output
+    const output = [];
+
+    // for each question...
+    myQuestions.forEach((currentQuestion, questionNumber) => {
+      // we'll want to store the list of answer choices
+      const answers = [];
+
+      // and for each available answer...
+      for (letter in currentQuestion.answers) {
+        // ...add an HTML radio button
+        answers.push(
+          `<label>
+             <input type="radio" name="question${questionNumber}" value="${letter}">
+              ${letter} :
+              ${currentQuestion.answers[letter]}
+           </label>`
+        );
+      }
+
+      // add this question and its answers to the output
+      output.push(
+        `<div class="slide">
+           <div class="question"> ${currentQuestion.question} </div>
+           <div class="answers"> ${answers.join("")} </div>
+         </div>`
+      );
+    });
+
+    // finally combine our output list into one string of HTML and put it on the page
+    quizContainer.innerHTML = output.join("");
+  }
+
+  function showResults() {
+    // gather answer containers from our quiz
+    const answerContainers = quizContainer.querySelectorAll(".answers");
+
+    // keep track of user's answers
+    let numCorrect = 0;
+
+    // for each question...
+    myQuestions.forEach((currentQuestion, questionNumber) => {
+      // find selected answer
+      const answerContainer = answerContainers[questionNumber];
+      const selector = `input[name=question${questionNumber}]:checked`;
+      const userAnswer = (answerContainer.querySelector(selector) || {}).value;
+
+      // if answer is correct
+      if (userAnswer === currentQuestion.correctAnswer) {
+        // add to the number of correct answers
+        numCorrect++;
+
+        // color the answers green
+        // answerContainers[questionNumber].style.color = "green";
+      } else {
+        // if answer is wrong or blank
+        // color the answers red
+        // answerContainers[questionNumber].style.color = "red";
+      }
+    });
+
+    // show number of correct answers out of total
+     resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
+  }
+
+  function showSlide(n) {
+    slides[currentSlide].classList.remove("active-slide");
+    slides[n].classList.add("active-slide");
+    currentSlide = n;
+    
+    if (currentSlide === 0) {
+    
+      previousButton.style.display = "none";
+    } else {
+      previousButton.style.display = "inline-block";
+ 
+
+    }
+    
+    if (currentSlide === slides.length - 1) {
+
+      nextButton.style.display = "none";
+      submitButton.style.display = "inline-block";
+    } else {
+      nextButton.style.display = "inline-block";
+      submitButton.style.display = "none";
+    }
+  }
+
+  function showNextSlide() {
+    showSlide(currentSlide + 1);
+  }
+
+  function showPreviousSlide() {    
+    showSlide(currentSlide - 1);
+  }
+  function myQuestion(){
+    showsilde(currentQuestion+1)
+  }
+
+
+
+  const quizContainer = document.getElementById("quiz");
+  const resultsContainer = document.getElementById("results");
+  const submitButton = document.getElementById("submit");
+
+  // display quiz right away
+  buildQuiz();
+
+  const previousButton = document.getElementById("previous");
+  const skipButton = document.getElementById("skip");
+  const nextButton = document.getElementById("next");
+  const slides = document.querySelectorAll(".slide");
+  let currentSlide = 0;
+
+  showSlide(0);
+
+  // on submit, show results
+  submitButton.addEventListener("click", showResults);
+  previousButton.addEventListener("click", showPreviousSlide);
+  skipButton.addEventListener("click", showNextSlide);
+  nextButton.addEventListener("click", showNextSlide);
+})();
+</script>
+</html>
