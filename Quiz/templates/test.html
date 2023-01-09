@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<h1>Javascript Quiz Game</h1>
+<h1>Javascript Quiz</h1>
 
   <div>Time left = <span id="timer"></span></div>
 <div class="quiz-container">
@@ -9,8 +9,8 @@
 </div>
 <button id="previous">Previous</button>
 <button id="skip">skip</button>
-<button id="next" name="button1">Next</button>
-<a href="ans.html"><button id="submit">Submit Quiz</button></a>
+<button id="next" name="button1" onclick="startTimer">Next</button>
+<button id="submit">Submit Quiz</button>
 <div id="results"></div> 
 </div>
 <body>
@@ -23,7 +23,7 @@ body{
 	color: #212020;
   font-weight: 300;
   text-align: center;
-  background-color: #f0f0ff;
+  background-color: #9d9dbe;
 }
 .timer{
   background-color:#2D3047;
@@ -46,7 +46,7 @@ h1{
   margin: 0px;
   padding: 10px;
   font-size: 30px;
-  background-color: #000;
+  background-color: rgb(177, 84, 224);
   color: #fff;
 
 ;
@@ -107,6 +107,7 @@ startTimer();
 
 
 function startTimer() {
+  
   var presentTime = document.getElementById('timer').innerHTML;
   var timeArray = presentTime.split(/[:]+/);
   var m = timeArray[0];

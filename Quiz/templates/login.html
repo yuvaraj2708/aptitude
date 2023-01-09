@@ -12,10 +12,12 @@
            }
      
         form{
-        padding-left: 500px;
+        padding-left: 525px;
  }
  h1{
     padding-left:38px;
+    color: #0066cc;
+    margin-top:70px;
  }
  p{
     padding-left: 450px;
@@ -35,7 +37,7 @@
     </div>
 
 {% endfor %}
- <h1>Login</h1><br><br>
+ <h1>Margy</h1><br><br>
  <label>Username*</label><br><br>
  <input type="text" name="username" required><br><br>
  <label>Password*</label><br><br>
@@ -43,6 +45,14 @@
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button>Login</button>
  </form> 
  <p class="text-center">Don't have an account? <a href="/register">Create an account</a>.</p>  
+
  </div>
 </body>
+<script>
+    $document.ready(function()
+    {
+        $('alert').hide(4000);
+
+    });
+</script>
 </html>

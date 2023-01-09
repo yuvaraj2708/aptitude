@@ -1,0 +1,114 @@
+{% block content %} 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Departments</title>
+
+</head>
+<style>
+  body{
+    background-color: rgb(63, 202, 202);
+    float: calc();
+    text-align: center;
+   margin-top:100px;
+    width: 50%;
+    padding: 10px;
+    direction:ltr;
+  }  
+  .out{
+  width: 400px;
+  height: 300px;
+  outline: 1px solid black;
+  animation: mymove 5s infinite;
+  /* float: calc(); */
+  margin-left: 470px;
+  max-height: fit-content;
+ outline: 15px solid rgb(42, 106, 128);
+ 
+  }
+  button{
+   
+    background-color: rgb(19, 240, 237);
+    color: rgb(192, 27, 65);
+  }
+  #chose{
+    margin-top: 5px;
+  }
+  .dropdown-option{
+    align-items: center;
+    float:calc();
+  }
+  
+</style>
+
+<body>
+
+    <div>
+        <form method="post" >
+            {% csrf_token %}
+            {% for message in messages %}
+        
+        <div class="alert alert-success">
+            <a class="close" href="#" data-dismiss="alert"></a>
+               {{ message }}
+        </div>
+    
+    {% endfor %}
+   <div class="out"><br>
+    
+    <label id="chose">Choose a Departments:</label>
+    <select name="Department_of" id="it">
+  <option value="IT">IT</option>
+  <option value="ACCOUNTS">ACCOUNTS</option>
+  <option value="SALES">SALES</option>
+    </select><br><br>
+
+    &nbsp;&nbsp;<label style="padding-right:6.5em;">Role:</label>
+    <select name="Role_is">
+    <option value="DEVELOPER">DEVELOPER</option>
+    <option value="ACCOUNTANT">ACCOUNTANT</option>
+    <option value="MARKETING">MARKETING</option>
+</select><br><br>
+
+<label name=" Topic" style="padding-right: 14em;">Topic:</label><br><br>
+
+<div class="dropdown" data-control="checkbox-dropdown">
+ 
+  <div class="dropdown-list">
+  
+    
+    <label class="dropdown-option">
+      <input type="checkbox" name="dropdown-group" name="python" value="Selection 1" />
+  Python
+    </label>&nbsp;&nbsp;</label  required><br>
+    <input type="checkbox" name="dropdown-group" name="C" value="Selection 1" />
+    C++
+      </label required>&nbsp;&nbsp;&nbsp;&nbsp;<br>
+    
+    <label class="dropdown-option">
+      <input type="checkbox" name="dropdown-group" name="Account" value="Selection 2" /> 
+    Accountancy
+    </label required><br>
+    
+    <label class="dropdown-option">
+      <input type="checkbox" name="dropdown-group" name="Product" value="Selection 3" />
+   Product Awareness 
+    </label required><br><br>
+    
+  <a href="/test" style="color: black;"><button>SUBMIT</a></button>  
+  <!-- <input type="submit" value="Validate" onclick="return Validate()" /> -->
+
+  </div>
+</div>
+</form>
+  </div>  
+</body>
+<script>
+
+</script>
+</html>
+{% endblock %}

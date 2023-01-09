@@ -24,8 +24,37 @@ class login(models.Model):
 
      def __str__(self):
          return self.username
-   
 
+   
+class Department(models.Model):
+    IT ='IT'
+    ACCOUNTS = 'ACCOUNTS'
+    SALES = 'SALES'
+    CHOOSE_DEPARTMENT = [
+        (IT,'IT'),
+        (ACCOUNTS,'ACCOUNTS'),
+        (SALES,'SALES'),
+    ]  
+    Department_of = models.CharField(max_length=225,choices=CHOOSE_DEPARTMENT,default=IT)
+       
+    DEVELOPER ='DEVELOP'
+    ACCOUNTANT ='ACCOUNT'
+    MARKETING = 'MARKET'
+    ROLE_CHOICE =[
+        (DEVELOPER,'DEVELOPER'),
+        (ACCOUNTANT,"ACCOUNTANT"),
+        (MARKETING,'MARKETING'),
+    ]
+    Role_is =models.CharField(max_length=225,choices=ROLE_CHOICE,default=DEVELOPER)
+    
+    python = models.BooleanField("python",default=True)
+    C =models.BooleanField("C++",default=True)
+    Account = models.BooleanField("Accountancy",default=False)
+    Product = models.BooleanField(" Product_Awareness",default=False)
+
+    
+    def is_upperclass(self):
+        return self.Department_of in {self.ACCOUNTS,self.SALES}
      
 
 

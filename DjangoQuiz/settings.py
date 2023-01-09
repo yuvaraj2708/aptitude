@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-uj1o6l1-ns)nqkkr!7v($8l0ed0$dc3%4m#$8_dm$bcw56377i
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Quiz.apps.QuizConfig',
+    'crispy_forms',
+     'django_admin_listfilter_dropdown',
 ]
 
 MIDDLEWARE = [
@@ -119,6 +121,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

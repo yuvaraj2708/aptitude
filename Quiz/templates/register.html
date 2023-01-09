@@ -1,4 +1,8 @@
-<html><head>
+{% block content %} 
+
+{% load crispy_forms_tags %}      
+<div class="container py-5">
+    <head>
  <style>   
  button{
         background-color: #0066cc;
@@ -14,29 +18,40 @@ h1{
 p{
  padding-left: 450px;
 }
-
+.reg{
+    margin-top: 5em;
+}
+h1{
+    padding-right: 10em;
+}
 </style>
 </head>
-<div class="container py-5">
-	<h1>Register</h1>
-	<form method="POST">
+
+<div class="reg">
+    <h1>Register</h1><br>
+    <form method="POST" autocomplete="off">
+            
+	<form method="POST" autocomplete="off">
         {% csrf_token %}
+		{{ register_form|crispy }}     
         {% for message in messages %}
         <div class="alert alert-success">
             <a class="close" href="#" data-dismiss="alert"></a>
                {{ message }}
-        </div>
+        </div><br>
     
-    {% endfor %}
+ {% endfor %} 
+                
+    
         <label>username*</label><br>
-        <input type="text" name="username"><br><br>
+        <input type="text" name="name" required><br><br>
         <!-- <p class="p1">Required .120 characters of fewer. Letters,digits and @/./+/-/_ only.</p> -->
         <label>Email_id*</label><br>
-        <input type="email" name="email"><br><br>
+        <input type="email" name="email"required><br><br>
         <label>Password*</label><br>
-        <input type="password" name="password"><br><br>
+        <input type="password" name="password1"required><br><br>
         <label>Password Confirmation*</label><br>
-        <input type="password" name="password1"><br>
+        <input type="password" name="password2"required><br>
         <ul>
         <li>Your password can't be too similar to your personal information.</li>
          <li>Your password must contain at least 8 characters.</li>
@@ -47,5 +62,6 @@ p{
 	</form>
 	<p class="text-center">If you already have an account, <a href="/login">login</a> instead.</p>
 </div>
-</html>
+</div>
 
+{% endblock %}
