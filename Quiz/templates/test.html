@@ -9,8 +9,8 @@
 </div>
 <button id="previous">Previous</button>
 <button id="skip">skip</button>
-<button id="next" name="button1" onclick="startTimer">Next</button>
-<button id="submit">Submit Quiz</button>
+<button id="next" name="button1" onclick="startTimer()">Next</button>
+<button id="submit"onclick="cleartime()">Submit Quiz</button>
 <div id="results"></div> 
 </div>
 <body>
@@ -102,12 +102,11 @@ button:hover{
 </style>
 </body>
 <script>
-document.getElementById('timer').innerHTML = 11 + ":" + 11;
-startTimer();
+let start=document.getElementById('timer').innerHTML = 15 + ":" + 10;
+// startTimer();
 
 
 function startTimer() {
-  
   var presentTime = document.getElementById('timer').innerHTML;
   var timeArray = presentTime.split(/[:]+/);
   var m = timeArray[0];
@@ -117,10 +116,10 @@ function startTimer() {
     return
   }
   
-  document.getElementById('timer').innerHTML =
+let stop = document.getElementById('timer').innerHTML =
     m + ":" + s;
   console.log(m)
-  setTimeout(startTimer, 1000);
+  stoptime = setTimeout(startTimer,2000);
   
 }
 
@@ -128,6 +127,9 @@ function checkSecond(sec) {
   if (sec < 10 && sec >= 0) {sec = "0" + sec}; // add zero in front of numbers < 10
   if (sec < 0) {sec = "59"};
   return sec;
+}
+function cleartime(){
+  clearTimeout(stoptime);
 }
 (function() {
   const myQuestions = [
