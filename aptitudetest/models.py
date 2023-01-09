@@ -23,3 +23,9 @@ class Test(models.Model):
     d = models.CharField(max_length=50, null=True ,blank=True)
     
 
+class Hrlogin(models.Model):
+    user = models.OneToOneField(User , on_delete=models.CASCADE, null=True ,blank=True)
+    auth_token = models.CharField(max_length=100 , null=True ,blank=True)
+    is_verified = models.BooleanField(default=False, null=True ,blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True ,blank=True)
+    

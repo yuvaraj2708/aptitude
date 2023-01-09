@@ -11,3 +11,5 @@ admin.site.register(Profile)
 @admin.register(Test)
 class PersonAdmin(ImportExportModelAdmin):
     list_display = ('department', 'role', 'topic','question','answeroption','a','b','c','d')
+
+admin.site.register(Hrlogin)

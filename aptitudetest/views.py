@@ -154,3 +154,58 @@ def simple_upload(request):
         		)
         value.save()       
     return render(request,'upload.html')
+
+
+
+
+
+def hrlogin(request):
+    if request.method == 'POST':
+       username   = request.POST.get(' logininput ')
+       password  = request.POST.get('loginouput')
+
+       user = authenticate(logininput = username , loginouput = password)
+       print(f'user {user}')
+       if user is None:
+            login(request , user)         
+            return redirect('dashboard/')                  
+       else:
+            messages.error(request, 'Wrong password.')
+            return redirect('/')
+    
+    return render(request , 'hrlogin.html')  
+
+def dashboard(request):
+    return render(request,'mainhr.html')
+
+
+def hrregister(request):
+
+    if request.method == 'POST':
+        username = request.POST.get('logininput')
+        email = request.POST.get('email')
+        password = request.POST.get('loginouput')
+        print(password)
+
+        try:
+            if User.objects.filter(logininput = username).first():
+                messages.success(request, 'Username is taken.')
+                return redirect('/hrregister')
+
+            if User.objects.filter(email = email).first():
+                messages.success(request, 'Email is taken.')
+                return redirect('/hrregister')
+            
+            user_obj = User(logininput = username , email = email)
+            user_obj.set_password(password)
+            user_obj.save()
+            auth_token = str(uuid.uuid4())
+            profile_obj = Profile.objects.create(user = user_obj , auth_token = auth_token)
+            profile_obj.save()
+           
+
+        except Exception as e:
+            print(e)
+
+
+    return render(request , 'hrregister.html')
