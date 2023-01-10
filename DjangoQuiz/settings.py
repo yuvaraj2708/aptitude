@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Quiz.apps.QuizConfig',
     'crispy_forms',
-     'django_admin_listfilter_dropdown',
+    'django_admin_listfilter_dropdown',
 ]
 
 MIDDLEWARE = [

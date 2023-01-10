@@ -1,5 +1,5 @@
 from multiprocessing import AuthenticationError
-from django.shortcuts import  render, redirect
+from django.shortcuts import  render, redirect,redirect,get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login 
 from django.contrib import messages
@@ -7,7 +7,9 @@ from django.contrib import messages
 from .forms import *
 from django.contrib.auth.models import User
 from .models import login
-
+from .forms import PersonCreationForm
+from .models import Person, Role
+from .models import *
 
 # def homepage(request):
 # Create your views here.
@@ -54,12 +56,37 @@ def reg(request):
             
     
 def department(request):
-    
-
-      
-
-
-    return render(request,'Depart.html')
+     return render(request,'Depart.html')
 def Test(request):
     return render(request,'Test.html')
+
+#samples
+def person_create_view(request):
+    form = PersonCreationForm()
+    if request.method == 'POST':
+        form = PersonCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('person_add')
+    return render(request, 'depart.html', {'form': form})
+
+
+def person_update_view(request, pk):
+    person = get_object_or_404(Person, pk=pk)
+    form = PersonCreationForm(instance=person)
+    if request.method == 'POST':
+        form = PersonCreationForm(request.POST, instance=person)
+        if form.is_valid():
+            form.save()
+            return redirect('person_change', pk=pk)
+    return render(request, 'depart.html', {'form': form})
+
+
+# AJAX
+def load_cities(request):
+    Department_id = request.GET.get('country_id')
+    Roles = Role.objects.filter(country_id=Department_id).all()
+    return render(request, 'depart.html', {'Roles':Roles})
+    # return JsonResponse(list(cities.values('id', 'name')), safe=False)
+
 

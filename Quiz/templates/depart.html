@@ -48,27 +48,34 @@
 <body>
 
     <div>
-        <form method="post" >
-            {% csrf_token %}
+       
+<form method="post" id="personForm" data-cities-url="{% url 'ajax_load_roles' %}">
+          {% csrf_token %}
+          {{ form.as_p }}
             {% for message in messages %}
         
         <div class="alert alert-success">
             <a class="close" href="#" data-dismiss="alert"></a>
                {{ message }}
         </div>
-    
-    {% endfor %}
+        <!-- <label for="id_city">City:</label>
+        <select name="city" id="id_city"> -->
+
    <div class="out"><br>
     
-    <label id="chose">Choose a Departments:</label>
-    <select name="Department_of" id="it">
+    <label for="id_Department">Choose a Departments:</label>
+    <select name="Department" id="id_Department">
+
   <option value="IT">IT</option>
   <option value="ACCOUNTS">ACCOUNTS</option>
   <option value="SALES">SALES</option>
     </select><br><br>
 
-    &nbsp;&nbsp;<label style="padding-right:6.5em;">Role:</label>
-    <select name="Role_is">
+    &nbsp;&nbsp;<label style="padding-right:6.5em;" for="id_role">Role:</label>
+    <select name="role" id="id_role">
+      {% for role in roles %}
+    <option value="{{ role.pk }}">{{ role.name }}</option>
+    {% endfor %}
     <option value="DEVELOPER">DEVELOPER</option>
     <option value="ACCOUNTANT">ACCOUNTANT</option>
     <option value="MARKETING">MARKETING</option>
@@ -105,10 +112,37 @@
   </div>
 </div>
 </form>
-  </div>  
-</body>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
+    $("#id_Department").change(function () {
+        const url = $("#personForm").attr("data-cities-url");  // get the url of the `load_cities` view
+        const departmentId = $(this).val();  // get the selected country ID from the HTML input
 
-</script>
+        $.ajax({                       // initialize an AJAX request
+            url: url,                    // set the url of the request (= /persons/ajax/load-cities/ )
+            data: {
+                'Department_id': departmentId       // add the country id to the GET parameters
+            },
+            success: function (data) {   // `data` is the return of the `load_cities` view function
+                $("#id_role").html(data);  // replace the contents of the city input with the data that came from the server
+                /*
+
+                let html_data = '<option value="">---------</option>';
+                data.forEach(function (city) {
+                    html_data += `<option value="${city.id}">${city.name}</option>`
+                });
+                console.log(html_data);
+                $("#id_city").html(html_data);
+
+                */
+            }
+        });
+
+    });
+</script>  
+
+</body>
+
 </html>
 {% endblock %}

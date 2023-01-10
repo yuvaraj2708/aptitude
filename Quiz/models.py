@@ -26,7 +26,7 @@ class login(models.Model):
          return self.username
 
    
-class Department(models.Model):
+class Depart(models.Model):
     IT ='IT'
     ACCOUNTS = 'ACCOUNTS'
     SALES = 'SALES'
@@ -56,5 +56,29 @@ class Department(models.Model):
     def is_upperclass(self):
         return self.Department_of in {self.ACCOUNTS,self.SALES}
      
+#samples
+
+class Department(models.Model):
+    name = models.CharField(max_length=40)
+
+    def __str__(self):
+        return self.name
+
+
+class Role(models.Model):
+    Department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    name = models.CharField(max_length=40)
+
+    def __str__(self):
+        return self.name
+
+
+class Person(models.Model):
+    name = models.CharField(max_length=124)
+    Department = models.ForeignKey(Department, on_delete=models.SET_NULL, blank=True, null=True)
+    Role = models.ForeignKey(Role, on_delete=models.SET_NULL, blank=True, null=True)
+
+    def __str__(self):
+        return self.name
 
 
