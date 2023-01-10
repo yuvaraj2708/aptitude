@@ -9,7 +9,7 @@ class Profile(models.Model):
     is_verified = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     def __str__(self):
-        return self.user.username
+        return self.user
 
 class Test(models.Model):
     department = models.CharField(max_length=50, null=True ,blank=True)
@@ -21,11 +21,13 @@ class Test(models.Model):
     b = models.CharField(max_length=50, null=True ,blank=True)
     c = models.CharField(max_length=50, null=True ,blank=True)
     d = models.CharField(max_length=50, null=True ,blank=True)
-    
+    def __str__(self):
+        return self.department
 
 class Hrlogin(models.Model):
     user = models.OneToOneField(User , on_delete=models.CASCADE, null=True ,blank=True)
     auth_token = models.CharField(max_length=100 , null=True ,blank=True)
     is_verified = models.BooleanField(default=False, null=True ,blank=True)
     created_at = models.DateTimeField(auto_now_add=True, null=True ,blank=True)
-    
+    def __str__(self):
+        return self.user

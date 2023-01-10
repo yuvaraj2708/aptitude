@@ -12,9 +12,8 @@ urlpatterns = [
     path('success/' , success , name='success'),
     path('verify/<auth_token>' , verify , name="verify"),
     path('error' , error_page , name="error"),
-    path('hrlogin/' , hrlogin , name="login"),
+    path('hrlogin/' , login , name="login"),
+    path('hrregister/' , signup , name="registration"),
     path('hrlogin/dashboard/' , dashboard , name="dashboard"),
-    path('hrregister/' , hrregister , name="registration"),
     path('login/department/' , department , name="department"),
-    
     ]

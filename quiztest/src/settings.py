@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'aptitudetest',
     'import_export',
     'pure_pagination',
+    
 ]
 
 MIDDLEWARE = [
@@ -132,10 +133,3 @@ EMAIL_HOST_PASSWORD = 'password'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
-
-PAGINATION_SETTINGS = {
-    'PAGE_RANGE_DISPLAYED': 10,
-    'MARGIN_PAGES_DISPLAYED': 2,
-
-    'SHOW_FIRST_PAGE_WHEN_INVALID': True,
-}

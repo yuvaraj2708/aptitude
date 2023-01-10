@@ -121,9 +121,7 @@ def error_page(request):
     return  render(request , 'error.html')
 
 
-def quiz_test(request):
-    return render(request , 'test.html')
-   
+
 
 
 
@@ -167,65 +165,72 @@ def simple_upload(request):
 
 
 
-def hrlogin(request):
-    if request.method == 'POST':
-       username   = request.POST.get(' logininput ')
-       password  = request.POST.get('loginouput')
 
-       user = authenticate(logininput = username , loginouput = password)
-       print(f'user {user}')
-       if user is None:
-            login(request , user)         
-            return redirect('dashboard/')                  
-       else:
-            messages.error(request, 'Wrong password.')
-            return redirect('/')
-    
-    return render(request , 'hrlogin.html')  
 
 def dashboard(request):
     return render(request,'mainhr.html')
 
 
-def hrregister(request):
 
+
+
+
+# from .models import Test
+
+
+# def test(request):
+# 	movies = Test.objects.all() #queryset containing all movies we just created
+# 	paginator = Paginator(movies, 3)
+# 	page_number = request.GET.get('page',1)
+# 	page_obj = paginator.get_page(page_number,1)
+# 	return render(request=request, template_name="main/test.html", context={'movies':page_obj})
+
+
+from django.contrib.auth.models import User
+from django.contrib import auth
+
+def signup(request):
+    if request.method == "POST":
+        if request.POST['password1'] == request.POST['password2']:
+            try:
+                User.objects.get(username = request.POST['username'])
+                return render (request,'register.html', {'error':'Username is already taken!'})
+            except User.DoesNotExist:
+                user = User.objects.create_user(request.POST['username'],password=request.POST['password1'])
+                auth.login(request,user)
+                return redirect('hrregister')
+        else:
+            return render (request,'hrregister.html', {'error':'Password does not match!'})
+    else:
+        return render(request,'hrregister.html')
+
+def login(request):
     if request.method == 'POST':
-        username = request.POST.get('logininput')
-        email = request.POST.get('email')
-        password = request.POST.get('loginouput')
-        print(password)
+        user = auth.authenticate(username=request.POST['username'],password = request.POST['password'])
+        if user is not None:
+            auth.login(request,user)
+            return redirect('dashboard/')
+        else:
+            return render (request,'hrlogin.html', {'error':'Username or password is incorrect!'})
+    else:
+        return render(request,'hrlogin.html')
 
-        try:
-            if User.objects.filter(logininput = username).first():
-                messages.success(request, 'Username is taken.')
-                return redirect('/hrregister')
-
-            if User.objects.filter(email = email).first():
-                messages.success(request, 'Email is taken.')
-                return redirect('/hrregister')
-            
-            user_obj = User(logininput = username , email = email)
-            user_obj.set_password(password)
-            user_obj.save()
-            auth_token = str(uuid.uuid4())
-            profile_obj = Profile.objects.create(user = user_obj , auth_token = auth_token)
-            profile_obj.save()
-           
-
-        except Exception as e:
-            print(e)
-
-
-    return render(request , 'hrregister.html')
-
-
+from django.shortcuts import render
+from django.core.paginator import Paginator 
 
 from .models import Test
 
+def quiz_test(request):
+    test = Test.objects.all()
 
-def test(request):
-	movies = Test.objects.all() #queryset containing all movies we just created
-	paginator = Paginator(movies, 3)
-	page_number = request.GET.get('page',1)
-	page_obj = paginator.get_page(page_number,1)
-	return render(request=request, template_name="main/test.html", context={'movies':page_obj})
+    test_paginator = Paginator(test, 1)
+
+    page_num = request.GET.get('page')
+
+    page = test_paginator.get_page(page_num)
+
+    context = {
+        'count' : test_paginator.count,
+        'page' : page
+    }
+    return render(request, 'test.html', context)
