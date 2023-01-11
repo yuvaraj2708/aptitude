@@ -13,3 +13,8 @@ class PersonAdmin(ImportExportModelAdmin):
     list_display = ('department', 'role', 'topic','question','answeroption','a','b','c','d')
 
 admin.site.register(Hrlogin)
+
+
+admin.site.register(Department)
+admin.site.register(Role)
+admin.site.register(Topic)

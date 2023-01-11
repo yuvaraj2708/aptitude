@@ -1,82 +1,58 @@
-<!DOCTYPE html>
+{% extends "base.html"%}
+
+    {% block content %}
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Departments</title>
-
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Department</title>
 </head>
-<style>
-  body{
-    background-color: rgb(63, 202, 202);
-    float: calc();
-    text-align: center;
-    margin-top: 130px;
-    padding-left:10px;
-  }  
-  .out{
-  width: 300px;
-  height: 200px;
-  outline: 1px solid black;
-  animation: mymove 5s infinite;
-  float: calc();
-  margin-left: 489px;
-  max-height: fit-content;
- outline: 15px solid rgb(42, 106, 128);
-  }
-  button{
-   
-    background-color: aqua;
-  }
-</style>
-
 <body>
-<div class="out">
-    <label for="Depart">Choose a Departments:</label>
-    <select name="IT " id="it">
-  <option value="IT">IT</option>
-  <option value="ACCOUNTS">ACCOUNTS</option>
-  <option value="SALES">SALES</option>
-    </select><br><br>
-
-    &nbsp;&nbsp;<label for="role">Role:</label>
-    <select> 
-    <option value="DEVELOPER">DEVELOPER</option>
-    <option value="ACCOUNTANT">ACCOUNTANT</option>
-    <option value="MARKETING">MARKETING</option>
-</select><br><br>
-
-<label>Topic:</label><br><br>
-
-<div class="dropdown" data-control="checkbox-dropdown">
- 
-  <div class="dropdown-list">
-  
-    
-    <label class="dropdown-option">
-      <input type="checkbox" name="dropdown-group" value="Selection 1" />
-  Python
-    </label>
-    
-    <label class="dropdown-option">
-      <input type="checkbox" name="dropdown-group" value="Selection 2" />
-    Accountance
-    </label>
-    
-    <label class="dropdown-option">
-      <input type="checkbox" name="dropdown-group" value="Selection 3" />
-   Client and support
-    </label><br><br>
-    
-  <a href="Test.html" ><button>SUBMIT</button></a>  
-  <!-- <input type="submit" value="Validate" onclick="return Validate()" /> -->
-
-  </div>
+<div class="container mt-5" style="width:40%">
+    <h3>Quiz Test</h3>
+    <label for="department">Department</label>
+    <select class="form-select" aria-label="Default select example" id="department" onchange="departmentfield()">
+        <option selected>Choose Department</option>
+        {% for i in department %}
+            <option value="{{i.id}}" {% if request.GET.department == i.id|lower %}selected{% endif %}>{{i.name}}</option>
+        {% endfor %}
+    </select>
+    <br/>
+    <label for="role">Role</label>
+    <select class="form-select" aria-label="Default select example" id="role" onchange="rolefield()">
+        <option selected>Choose Role</option>
+        {% for i in role %}
+            <option value="{{i.id}}" {% if request.GET.role == i.id|lower %}selected{% endif %}>{{i.name}}</option>
+        {% endfor %}
+    </select>
+<br/>
+    <label for="topic">Topic</label>
+    <select class="form-select" aria-label="Default select example" id="topic">
+        <option selected>Choose Topic</option>
+        {% for i in topic %}
+            <option value="{{i.id}}">{{i.name}}</option>
+        {% endfor %}
+    </select>
+    <br/>
 </div>
-  </div>  
-</body>
 <script>
-
+    function departmentfield(){
+        departmentid = document.getElementById('department').value;
+        window.location = "/?department="+departmentid;
+    }
+    function rolefield(){
+       roleid = document.getElementById('role').value;
+       window.location = "/?department="+'{{request.GET.department}}'+"&role="+roleid;
+    }
 </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
 </html>
+<center><button><a href="{% url 'test'%}">SUBMIT</a></button></center>
+
+{% endblock %}

@@ -29,5 +29,60 @@ class Hrlogin(models.Model):
     auth_token = models.CharField(max_length=100 , null=True ,blank=True)
     is_verified = models.BooleanField(default=False, null=True ,blank=True)
     created_at = models.DateTimeField(auto_now_add=True, null=True ,blank=True)
+    
+
+class Department(models.Model):
+    name = models.CharField(max_length=100, blank=True, null=True)
     def __str__(self):
-        return self.user
+        return self.name
+
+class Role(models.Model):
+    Department = models.ForeignKey(Department, on_delete=models.CASCADE, null=True)
+    name = models.CharField(max_length=100, blank=True, null=True)
+    def __str__(self):
+        return self.name
+
+class Topic(models.Model):
+    Role = models.ForeignKey(Role, on_delete=models.CASCADE, null=True)
+    name = models.CharField(max_length=100, blank=True, null=True)
+    def __str__(self):
+        return self.name
+  
+    # IT = 'IT'
+    # ACCOUNTS = 'ACCOUNTS'
+    # SALES = 'SALES'
+    # CHOOSE_DEPARTMENT = [
+    #     (IT , 'IT'),
+    #     (ACCOUNTS , "ACCOUNTS"),
+    #     (SALES , "SALES"),
+    # ]
+    # Department_of = models.CharField(max_length=225,choices=CHOOSE_DEPARTMENT,default=IT)
+    # DEVELOPER='DEVELOPER'
+    # ACCOUNTANT ='ACCOUNTANT'
+    # PYTHON = 'PYTHON'
+    # ACCOUNTANCY = 'ACCOUNTANCY'
+    # CLIENT_AND_SUPPORT = 'CLIENT AND SUPPORT'
+    # MARKETING = 'MARKETING'
+
+    # IT = models.CharField(max_length=50,null=True,blank=True)
+    # IT =[
+    #         (DEVELOPER,'DEVELOPER'),
+    #         (ACCOUNTANT,'ACCOUNTANT'),
+    #         (MARKETING,'MARKETING'),
+    #     ]
+    # DEVELOPER = models.CharField(max_length = 50,null = True,blank = True)
+    # DEVELOPER =[ 
+    #         (PYTHON,'python'),
+    #         (ACCOUNTANCY,'ACCOUNTANCY'),
+    #         (CLIENT_AND_SUPPORT,'CLIENT AND SUPPORT'),
+    #     ]
+    # Choose_Field = models.CharField(max_length=225,choices=IT,default=DEVELOPER)
+    # Domin = models.CharField(max_length=225,choices=DEVELOPER,default=PYTHON)
+    # ACCOUNTS = models.CharField(max_length=50,null=True,blank= True)
+   
+    
+    # ACCOUNTANT = models.CharField(max_length=50,null =True,blank=True)
+    # SALES = models.CharField(max_length=50 ,null = True,blank = True)
+    # MARKETING=models.CharField(max_length=50,null=True,blank=True)
+    
+    

@@ -12,6 +12,8 @@ from django.core.mail import send_mail
 from django.contrib.auth import authenticate,login
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.shortcuts import render
+from .models import Department, Role,Topic 
 
 # Create your views here.
 
@@ -49,11 +51,7 @@ def login_attempt(request):
 
     return render(request , 'login.html')
 
-def department(request):
-        
 
-    return render(request ,'department.html')
-    
 
     
    
@@ -80,8 +78,8 @@ def register_attempt(request):
             auth_token = str(uuid.uuid4())
             profile_obj = Profile.objects.create(user = user_obj , auth_token = auth_token)
             profile_obj.save()
-            send_mail_after_registration(email , auth_token)
-            return redirect('/token')
+            (email , auth_token)
+            return redirect('/')
 
         except Exception as e:
             print(e)
@@ -126,12 +124,12 @@ def error_page(request):
 
 
 
-def send_mail_after_registration(email , token):
-    subject = 'Your accounts need to be verified'
-    message = f'Hi paste the link to verify your account http://127.0.0.1:8000/verify/{token}'
-    email_from = settings.EMAIL_HOST_USER
-    recipient_list = [email]
-    send_mail(subject, message , email_from ,recipient_list )
+# def send_mail_after_registration(email , token):
+#     subject = 'Your accounts need to be verified'
+#     message = f'Hi paste the link to verify your account http://127.0.0.1:8000/verify/{token}'
+#     email_from = settings.EMAIL_HOST_USER
+#     recipient_list = [email]
+#     send_mail(subject, message , email_from ,recipient_list )
 
 
 def simple_upload(request):
@@ -175,15 +173,6 @@ def dashboard(request):
 
 
 
-# from .models import Test
-
-
-# def test(request):
-# 	movies = Test.objects.all() #queryset containing all movies we just created
-# 	paginator = Paginator(movies, 3)
-# 	page_number = request.GET.get('page',1)
-# 	page_obj = paginator.get_page(page_number,1)
-# 	return render(request=request, template_name="main/test.html", context={'movies':page_obj})
 
 
 from django.contrib.auth.models import User
@@ -234,3 +223,26 @@ def quiz_test(request):
         'page' : page
     }
     return render(request, 'test.html', context)
+
+def department(request):
+    departmentid = request.GET.get('Department', None)
+    Roleid = request.GET.get('role', None)
+    Role = None
+    Topic  = None
+    if departmentid:
+        getdepartment = Department.objects.get(id=departmentid)
+        Role = Role.objects.filter(department=getdepartment)
+    if Roleid:
+        getrole = Role.objects.get(id=Roleid)
+        Topic = Topic.objects.filter(role=getrole)
+    department = Department.objects.all()
+    return render(request, 'department.html', locals())
+    
+ 
+
+
+    
+
+    
+
+            
