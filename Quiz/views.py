@@ -61,32 +61,18 @@ def Test(request):
     return render(request,'Test.html')
 
 #samples
-def person_create_view(request):
-    form = PersonCreationForm()
-    if request.method == 'POST':
-        form = PersonCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('person_add')
-    return render(request, 'depart.html', {'form': form})
+def department(request):
+    departmentid = request.GET.get('department', None)
+    roleid = request.GET.get('role', None)
+    Role = None
+    Topic = None
 
+    if departmentid:
+        getdepartment = Department.objects.get(id=departmentid)
+        role = Role.objects.filter(country=getdepartment)
 
-def person_update_view(request, pk):
-    person = get_object_or_404(Person, pk=pk)
-    form = PersonCreationForm(instance=person)
-    if request.method == 'POST':
-        form = PersonCreationForm(request.POST, instance=person)
-        if form.is_valid():
-            form.save()
-            return redirect('person_change', pk=pk)
-    return render(request, 'depart.html', {'form': form})
-
-
-# AJAX
-def load_cities(request):
-    Department_id = request.GET.get('country_id')
-    Roles = Role.objects.filter(country_id=Department_id).all()
-    return render(request, 'depart.html', {'Roles':Roles})
-    # return JsonResponse(list(cities.values('id', 'name')), safe=False)
-
-
+    if roleid:
+        getrole = Role.objects.get(id=roleid)
+        Topic = Topic.objects.filter(role=getrole)
+    department = Department.objects.all()
+    return render(request, 'depart.html', locals())

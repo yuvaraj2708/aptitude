@@ -16,6 +16,7 @@ admin.site.register(Depart)
 #sample
 admin.site.register(Department)
 admin.site.register(Role)
+admin.site.register(Topic)
 admin.site.register(Person)
 
 

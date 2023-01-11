@@ -59,22 +59,27 @@ class Depart(models.Model):
 #samples
 
 class Department(models.Model):
-    name = models.CharField(max_length=40)
+    name = models.CharField(max_length=40,null=True,blank=True)
 
     def __str__(self):
         return self.name
 
 
 class Role(models.Model):
-    Department = models.ForeignKey(Department, on_delete=models.CASCADE)
-    name = models.CharField(max_length=40)
+    Department = models.ForeignKey(Department, on_delete=models.CASCADE,null=True)
+    name = models.CharField(max_length=40,null=True,blank=True)
 
     def __str__(self):
         return self.name
 
-
+class Topic(models.Model):
+    Role = models.ForeignKey(Department,on_delete=models.CASCADE,null=True)
+    name = models.CharField(max_length=100,blank=True,null=True)
+    def __str__(self):
+        return self.name()
+        
 class Person(models.Model):
-    name = models.CharField(max_length=124)
+    name = models.CharField(max_length=124,null=True,blank=True)
     Department = models.ForeignKey(Department, on_delete=models.SET_NULL, blank=True, null=True)
     Role = models.ForeignKey(Role, on_delete=models.SET_NULL, blank=True, null=True)
 

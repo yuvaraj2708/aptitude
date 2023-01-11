@@ -1,148 +1,55 @@
-{% block content %} 
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <title>Departments</title>
-
 </head>
-<style>
-  body{
-    background-color: rgb(63, 202, 202);
-    float: calc();
-    text-align: center;
-   margin-top:100px;
-    width: 50%;
-    padding: 10px;
-    direction:ltr;
-  }  
-  .out{
-  width: 400px;
-  height: 300px;
-  outline: 1px solid black;
-  animation: mymove 5s infinite;
-  /* float: calc(); */
-  margin-left: 470px;
-  max-height: fit-content;
- outline: 15px solid rgb(42, 106, 128);
- 
-  }
-  button{
-   
-    background-color: rgb(19, 240, 237);
-    color: rgb(192, 27, 65);
-  }
-  #chose{
-    margin-top: 5px;
-  }
-  .dropdown-option{
-    align-items: center;
-    float:calc();
-  }
-  
-</style>
-
 <body>
+<div class="container mt-5" style="width:40%">
+    <h3>Choose the Departments </h3>
+    <label for="country">Department</label>
+    <select class="form-select" aria-label="Default select example" id="country" onchange="departmentfield()">
+        <option selected>Choose Department</option>
+        {% for i in department %}
+            <option value="{{i.id}}" {% if request.GET.department == i.id|lower %}selected{% endif %}>{{i.name}}</option>
+        {% endfor %}
+    </select>
+    <br/>
+    <label for="state">Role</label>
+    <select class="form-select" aria-label="Default select example" id="state" onchange="rolefield()">
+        <option selected>Choose Role</option>
+        {% for i in role %}
+            <option value="{{i.id}}" {% if request.GET.role == i.id|lower %}selected{% endif %}>{{i.name}}</option>
+        {% endfor %}
+    </select>
+<br/>
+    <label for="district">Topic</label>
+    <select class="form-select" aria-label="Default select example" id="district">
+        <option selected>Choose Topic</option>
+        {% for i in topic %}
+            <option value="{{i.id}}">{{i.name}}</option>
+        {% endfor %}
+        </select><br>
 
-    <div>
-       
-<form method="post" id="personForm" data-cities-url="{% url 'ajax_load_roles' %}">
-          {% csrf_token %}
-          {{ form.as_p }}
-            {% for message in messages %}
-        
-        <div class="alert alert-success">
-            <a class="close" href="#" data-dismiss="alert"></a>
-               {{ message }}
-        </div>
-        <!-- <label for="id_city">City:</label>
-        <select name="city" id="id_city"> -->
-
-   <div class="out"><br>
-    
-    <label for="id_Department">Choose a Departments:</label>
-    <select name="Department" id="id_Department">
-
-  <option value="IT">IT</option>
-  <option value="ACCOUNTS">ACCOUNTS</option>
-  <option value="SALES">SALES</option>
-    </select><br><br>
-
-    &nbsp;&nbsp;<label style="padding-right:6.5em;" for="id_role">Role:</label>
-    <select name="role" id="id_role">
-      {% for role in roles %}
-    <option value="{{ role.pk }}">{{ role.name }}</option>
-    {% endfor %}
-    <option value="DEVELOPER">DEVELOPER</option>
-    <option value="ACCOUNTANT">ACCOUNTANT</option>
-    <option value="MARKETING">MARKETING</option>
-</select><br><br>
-
-<label name=" Topic" style="padding-right: 14em;">Topic:</label><br><br>
-
-<div class="dropdown" data-control="checkbox-dropdown">
- 
-  <div class="dropdown-list">
-  
-    
-    <label class="dropdown-option">
-      <input type="checkbox" name="dropdown-group" name="python" value="Selection 1" />
-  Python
-    </label>&nbsp;&nbsp;</label  required><br>
-    <input type="checkbox" name="dropdown-group" name="C" value="Selection 1" />
-    C++
-      </label required>&nbsp;&nbsp;&nbsp;&nbsp;<br>
-    
-    <label class="dropdown-option">
-      <input type="checkbox" name="dropdown-group" name="Account" value="Selection 2" /> 
-    Accountancy
-    </label required><br>
-    
-    <label class="dropdown-option">
-      <input type="checkbox" name="dropdown-group" name="Product" value="Selection 3" />
-   Product Awareness 
-    </label required><br><br>
-    
-  <a href="/test" style="color: black;"><button>SUBMIT</a></button>  
-  <!-- <input type="submit" value="Validate" onclick="return Validate()" /> -->
-
-  </div>
+      <a href="/test" <button type="submit" style=" justify-content: center; display: flex;color: rgb(120, 93, 226);    ">Submit</button></a>
+    <br/>
 </div>
-</form>
-  </div>
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
-    $("#id_Department").change(function () {
-        const url = $("#personForm").attr("data-cities-url");  // get the url of the `load_cities` view
-        const departmentId = $(this).val();  // get the selected country ID from the HTML input
-
-        $.ajax({                       // initialize an AJAX request
-            url: url,                    // set the url of the request (= /persons/ajax/load-cities/ )
-            data: {
-                'Department_id': departmentId       // add the country id to the GET parameters
-            },
-            success: function (data) {   // `data` is the return of the `load_cities` view function
-                $("#id_role").html(data);  // replace the contents of the city input with the data that came from the server
-                /*
-
-                let html_data = '<option value="">---------</option>';
-                data.forEach(function (city) {
-                    html_data += `<option value="${city.id}">${city.name}</option>`
-                });
-                console.log(html_data);
-                $("#id_city").html(html_data);
-
-                */
-            }
-        });
-
-    });
-</script>  
-
+    function departmentfield(){
+        departmentid = document.getElementById('department').value;
+        window.location = "/?country="+departmentid;
+    }
+    function statefield(){
+       roleid = document.getElementById('role').value;
+       window.location = "/?department="+'{{request.GET.department}}'+"&role="+roleid;
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
 </body>
-
 </html>
-{% endblock %}
+
