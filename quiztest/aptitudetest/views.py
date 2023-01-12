@@ -18,8 +18,8 @@ from .models import Department, Role,Topic
 # Create your views here.
 
 @login_required
-def home(request):
-    return render(request , 'home.html')
+# def home(request):
+#     return render(request , 'home.html')
 
 
 
@@ -28,26 +28,16 @@ def login_attempt(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
 
-        # user_obj = User.objects.filter(username = username).first()
-        # if user_obj is None:
-        #     messages.success(request, 'User not found.')
-        #     return redirect('/accounts/login')
-        
-        
-        # profile_obj = Profile.objects.filter(user = user_obj ).first()
-
-        # if not profile_obj.is_verified:
-        #     messages.success(request, 'Profile is not verified check your mail.')
-        #     return redirect('/login/test1')
-
+      
         user = authenticate(username = username , password = password)
         print(f'user {user}')
-        if user is None:
-            messages.error(request, 'Wrong password.')
-            return redirect('/')
+        if user is not None:
+             login(request)
+             return redirect('/department')
         else:
-            login(request , user)
-            return redirect('login/department/')
+           
+          messages.error(request, 'Wrong password.')
+          return redirect('/')
 
     return render(request , 'login.html')
 
@@ -225,22 +215,51 @@ def quiz_test(request):
     return render(request, 'test.html', context)
 
 def department(request):
-    departmentid = request.GET.get('Department', None)
-    Roleid = request.GET.get('role', None)
-    Role = None
-    Topic  = None
+    departmentid = request.GET.get('department', None)
+    roleid = request.GET.get('role', None)
+    role = None
+    topic  = None
     if departmentid:
         getdepartment = Department.objects.get(id=departmentid)
-        Role = Role.objects.filter(department=getdepartment)
-    if Roleid:
-        getrole = Role.objects.get(id=Roleid)
-        Topic = Topic.objects.filter(role=getrole)
+        role = Role.objects.filter(department=getdepartment)
+    if roleid:
+           getrole = Role.objects.get(id=roleid)
+           topic = Topic.objects.filter(Role=getrole)
     department = Department.objects.all()
+        
+    
     return render(request, 'department.html', locals())
     
- 
 
+def testaccounts(request):
+    testaccount = Testaccount.objects.all()
 
+    testaccount_paginator = Paginator(testaccount, 1)
+
+    page_num = request.GET.get('page')
+
+    page = testaccount_paginator.get_page(page_num)
+
+    context = {
+        'count' : testaccount_paginator.count,
+        'page' : page
+    }
+    return render(request, 'testaccounts.html', context)
+    
+def testsales(request):
+    testsale = Testsale.objects.all()
+
+    testsale_paginator = Paginator(testsale, 1)
+
+    page_num = request.GET.get('page')
+
+    page = testsale_paginator.get_page(page_num)
+
+    context = {
+        'count' : testsale_paginator.count,
+        'page' : page
+    }
+    return render(request, 'testsales.html', context)
     
 
     

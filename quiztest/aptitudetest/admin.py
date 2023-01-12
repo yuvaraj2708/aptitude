@@ -18,3 +18,6 @@ admin.site.register(Hrlogin)
 admin.site.register(Department)
 admin.site.register(Role)
 admin.site.register(Topic)
+admin.site.register(Testaccount)
+
+admin.site.register(Testsale)

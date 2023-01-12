@@ -11,18 +11,7 @@ class Profile(models.Model):
     def __str__(self):
         return self.user
 
-class Test(models.Model):
-    department = models.CharField(max_length=50, null=True ,blank=True)
-    role = models.CharField(max_length=50, null=True ,blank=True)
-    topic = models.CharField(max_length=50, null=True ,blank=True)
-    question = models.CharField(max_length=255, null=True ,blank=True)
-    answeroption = models.CharField(max_length=50, null=True ,blank=True)
-    a = models.CharField(max_length=50, null=True ,blank=True)
-    b = models.CharField(max_length=50, null=True ,blank=True)
-    c = models.CharField(max_length=50, null=True ,blank=True)
-    d = models.CharField(max_length=50, null=True ,blank=True)
-    def __str__(self):
-        return self.department
+
 
 class Hrlogin(models.Model):
     user = models.OneToOneField(User , on_delete=models.CASCADE, null=True ,blank=True)
@@ -37,7 +26,7 @@ class Department(models.Model):
         return self.name
 
 class Role(models.Model):
-    Department = models.ForeignKey(Department, on_delete=models.CASCADE, null=True)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE, null=True)
     name = models.CharField(max_length=100, blank=True, null=True)
     def __str__(self):
         return self.name
@@ -47,42 +36,45 @@ class Topic(models.Model):
     name = models.CharField(max_length=100, blank=True, null=True)
     def __str__(self):
         return self.name
-  
-    # IT = 'IT'
-    # ACCOUNTS = 'ACCOUNTS'
-    # SALES = 'SALES'
-    # CHOOSE_DEPARTMENT = [
-    #     (IT , 'IT'),
-    #     (ACCOUNTS , "ACCOUNTS"),
-    #     (SALES , "SALES"),
-    # ]
-    # Department_of = models.CharField(max_length=225,choices=CHOOSE_DEPARTMENT,default=IT)
-    # DEVELOPER='DEVELOPER'
-    # ACCOUNTANT ='ACCOUNTANT'
-    # PYTHON = 'PYTHON'
-    # ACCOUNTANCY = 'ACCOUNTANCY'
-    # CLIENT_AND_SUPPORT = 'CLIENT AND SUPPORT'
-    # MARKETING = 'MARKETING'
 
-    # IT = models.CharField(max_length=50,null=True,blank=True)
-    # IT =[
-    #         (DEVELOPER,'DEVELOPER'),
-    #         (ACCOUNTANT,'ACCOUNTANT'),
-    #         (MARKETING,'MARKETING'),
-    #     ]
-    # DEVELOPER = models.CharField(max_length = 50,null = True,blank = True)
-    # DEVELOPER =[ 
-    #         (PYTHON,'python'),
-    #         (ACCOUNTANCY,'ACCOUNTANCY'),
-    #         (CLIENT_AND_SUPPORT,'CLIENT AND SUPPORT'),
-    #     ]
-    # Choose_Field = models.CharField(max_length=225,choices=IT,default=DEVELOPER)
-    # Domin = models.CharField(max_length=225,choices=DEVELOPER,default=PYTHON)
-    # ACCOUNTS = models.CharField(max_length=50,null=True,blank= True)
-   
-    
-    # ACCOUNTANT = models.CharField(max_length=50,null =True,blank=True)
-    # SALES = models.CharField(max_length=50 ,null = True,blank = True)
-    # MARKETING=models.CharField(max_length=50,null=True,blank=True)
-    
-    
+
+class Test(models.Model):
+    department = models.CharField(max_length=50, null=True ,blank=True)
+    role = models.CharField(max_length=50, null=True ,blank=True)
+    topic = models.CharField(max_length=50, null=True ,blank=True)
+    question = models.CharField(max_length=255, null=True ,blank=True)
+    answeroption = models.CharField(max_length=50, null=True ,blank=True)
+    a = models.CharField(max_length=50, null=True ,blank=True)
+    b = models.CharField(max_length=50, null=True ,blank=True)
+    c = models.CharField(max_length=50, null=True ,blank=True)
+    d = models.CharField(max_length=50, null=True ,blank=True)
+    def __str__(self):
+        return self.department
+
+
+class Testaccount(models.Model): 
+    department = models.CharField(max_length=50, null=True ,blank=True)
+    role = models.CharField(max_length=50, null=True ,blank=True)
+    topic = models.CharField(max_length=50, null=True ,blank=True)
+    question = models.CharField(max_length=255, null=True ,blank=True)
+    answeroption = models.CharField(max_length=50, null=True ,blank=True)
+    a = models.CharField(max_length=50, null=True ,blank=True)
+    b = models.CharField(max_length=50, null=True ,blank=True)
+    c = models.CharField(max_length=50, null=True ,blank=True)
+    d = models.CharField(max_length=50, null=True ,blank=True)
+    def __str__(self):
+        return self.department
+
+        
+class Testsale(models.Model): 
+    department = models.CharField(max_length=50, null=True ,blank=True)
+    role = models.CharField(max_length=50, null=True ,blank=True)
+    topic = models.CharField(max_length=50, null=True ,blank=True)
+    question = models.CharField(max_length=255, null=True ,blank=True)
+    answeroption = models.CharField(max_length=50, null=True ,blank=True)
+    a = models.CharField(max_length=50, null=True ,blank=True)
+    b = models.CharField(max_length=50, null=True ,blank=True)
+    c = models.CharField(max_length=50, null=True ,blank=True)
+    d = models.CharField(max_length=50, null=True ,blank=True)
+    def __str__(self):
+        return self.department
