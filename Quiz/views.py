@@ -7,8 +7,6 @@ from django.contrib import messages
 from .forms import *
 from django.contrib.auth.models import User
 from .models import login
-from .forms import PersonCreationForm
-from .models import Person, Role
 from .models import *
 
 # def homepage(request):
@@ -21,11 +19,11 @@ def log(request):
     
         if user is not None:
            login(request,user)            
-           return redirect("/depart")     
+           return redirect("/")     
 
         else:
              messages.success(request,'Invalid username or password.')
-             return redirect("/")
+             return redirect("/depart")
     else:
         return render(request,'login.html',{})
 
@@ -37,7 +35,7 @@ def reg(request):
         password1 = request.POST.get('password1')
         password2 =request.POST.get('password2')
        
-        if password1 == password2:
+        if password1 == password2 :
              user =User.objects.create_user(request,username=name,email=email,password1=password2)
              user.is_staff = True
              user.is_active = True
@@ -55,8 +53,6 @@ def reg(request):
       
             
     
-def department(request):
-     return render(request,'Depart.html')
 def Test(request):
     return render(request,'Test.html')
 
@@ -64,15 +60,16 @@ def Test(request):
 def department(request):
     departmentid = request.GET.get('department', None)
     roleid = request.GET.get('role', None)
-    Role = None
-    Topic = None
+    role = None
+    topic = None
 
     if departmentid:
         getdepartment = Department.objects.get(id=departmentid)
-        role = Role.objects.filter(country=getdepartment)
+        role = Role.objects.filter(department=getdepartment)
 
     if roleid:
         getrole = Role.objects.get(id=roleid)
-        Topic = Topic.objects.filter(role=getrole)
+       
+        topic = Topic.objects.filter(role=getrole)
     department = Department.objects.all()
     return render(request, 'depart.html', locals())

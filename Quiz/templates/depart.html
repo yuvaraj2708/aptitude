@@ -9,40 +9,43 @@
 </head>
 <body>
 <div class="container mt-5" style="width:40%">
-    <h3>Choose the Departments </h3>
-    <label for="country">Department</label>
-    <select class="form-select" aria-label="Default select example" id="country" onchange="departmentfield()">
+    <h3>Quiz Test </h3>
+    <label for="department">Department</label>
+
+    <select class="form-select" aria-label="Default select example" id="department" onchange="departmentfield()">
         <option selected>Choose Department</option>
         {% for i in department %}
             <option value="{{i.id}}" {% if request.GET.department == i.id|lower %}selected{% endif %}>{{i.name}}</option>
         {% endfor %}
     </select>
     <br/>
-    <label for="state">Role</label>
-    <select class="form-select" aria-label="Default select example" id="state" onchange="rolefield()">
+
+    <label for="role">Role</label>
+    <select class="form-select" aria-label="Default select example" id="role" onchange="rolefield()">
         <option selected>Choose Role</option>
         {% for i in role %}
             <option value="{{i.id}}" {% if request.GET.role == i.id|lower %}selected{% endif %}>{{i.name}}</option>
         {% endfor %}
     </select>
 <br/>
-    <label for="district">Topic</label>
-    <select class="form-select" aria-label="Default select example" id="district">
+
+    <label for="topic">Topic</label>
+    <select class="form-select" aria-label="Default select example" id="topic">
         <option selected>Choose Topic</option>
         {% for i in topic %}
             <option value="{{i.id}}">{{i.name}}</option>
         {% endfor %}
         </select><br>
 
-      <a href="/test" <button type="submit" style=" justify-content: center; display: flex;color: rgb(120, 93, 226);    ">Submit</button></a>
+      <a href="/test" <button type="submit" style=" justify-content: center; display: flex;color: rgb(120, 93, 226); ">Submit</button></a>
     <br/>
 </div>
 <script>
     function departmentfield(){
         departmentid = document.getElementById('department').value;
-        window.location = "/?country="+departmentid;
+        window.location = "/?department="+departmentid;
     }
-    function statefield(){
+    function rolefield(){
        roleid = document.getElementById('role').value;
        window.location = "/?department="+'{{request.GET.department}}'+"&role="+roleid;
     }
