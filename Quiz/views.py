@@ -19,11 +19,11 @@ def log(request):
     
         if user is not None:
            login(request,user)            
-           return redirect("/")     
+           return redirect("/depart")     
 
         else:
              messages.success(request,'Invalid username or password.')
-             return redirect("/depart")
+             return redirect("/")
     else:
         return render(request,'login.html',{})
 
@@ -60,8 +60,8 @@ def Test(request):
 def department(request):
     departmentid = request.GET.get('department', None)
     roleid = request.GET.get('role', None)
-    role = None
-    topic = None
+
+  
 
     if departmentid:
         getdepartment = Department.objects.get(id=departmentid)
@@ -72,4 +72,8 @@ def department(request):
        
         topic = Topic.objects.filter(role=getrole)
     department = Department.objects.all()
-    return render(request, 'depart.html', locals())
+    return render(request, 'sample.html', locals())
+
+def sample(request):
+    
+    return render(request,"department.html")
