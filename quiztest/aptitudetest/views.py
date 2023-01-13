@@ -14,15 +14,16 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import render
 from .models import Department, Role,Topic 
-
+from django.http import HttpResponse
 # Create your views here.
 
-@login_required
+
 # def home(request):
 #     return render(request , 'home.html')
+def rules(request):
+    return render(request,'rules_and_regulations.html')
 
-
-
+@login_required
 def login_attempt(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -33,14 +34,13 @@ def login_attempt(request):
         print(f'user {user}')
         if user is not None:
              login(request)
-             return redirect('/department')
+             return redirect('/login/department')
         else:
            
           messages.error(request, 'Wrong password.')
           return redirect('/')
 
     return render(request , 'login.html')
-
 
 
     
@@ -215,20 +215,34 @@ def quiz_test(request):
     return render(request, 'test.html', context)
 
 def department(request):
-    departmentid = request.GET.get('department', None)
-    roleid = request.GET.get('role', None)
-    role = None
-    topic  = None
-    if departmentid:
-        getdepartment = Department.objects.get(id=departmentid)
-        role = Role.objects.filter(department=getdepartment)
-    if roleid:
-           getrole = Role.objects.get(id=roleid)
-           topic = Topic.objects.filter(Role=getrole)
-    department = Department.objects.all()
-        
-    
-    return render(request, 'department.html', locals())
+
+    # departmentid = request.GET.get('department', None)
+    # roleid = request.GET.get('role', None)
+    # role = None
+    # topic  = None
+    # if departmentid:
+    #     getdepartment = Department.objects.get(id=departmentid)
+    #     role = Role.objects.filter(department=getdepartment)
+    # if roleid:
+    #        getrole = Role.objects.get(id=roleid)
+    #        topic = Topic.objects.filter(Role=getrole)
+    # department = Department.objects.all()
+    # # if department is not None:    
+    # #     departmentid = Department.objects.filter(id = 1)
+    # #     roleid = Role.objects.filter(id = 1)
+    # #     topic = Topic.objects.filter(id = 1)
+    # #     return redirect('login/department/test1')
+    return render(request, 'department.html')
+
+
+
+def filter(request):
+
+    results = request.GET['department']
+    topics = request.GET['topic']
+    roles = request.GET['role']
+    return render(request,"departmentfilter.html",{'department':results,'topic':topics,'role':roles})
+
     
 
 def testaccounts(request):
@@ -264,4 +278,3 @@ def testsales(request):
 
     
 
-            

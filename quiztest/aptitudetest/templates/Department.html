@@ -1,59 +1,33 @@
-{% extends "base.html"%}
 
-    {% block content %}
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <title>Department</title>
-</head>
-<body>
-<div class="container mt-5" style="width:40%">
-    <h3>Quiz Test</h3>
-    <label for="department">Department</label>
-    <select class="form-select" aria-label="Default select example" id="department" onchange="departmentfield()">
-        <option selected>Choose Department</option>
-        {% for i in department %}
-            <option value="{{i.id}}" {% if request.GET.department == i.id|lower %}selected{% endif %}>{{i.name}}</option>
-        {% endfor %}
-    </select>
-    <br/>
-    <label for="role">Role</label>
-    <select class="form-select" aria-label="Default select example" id="role" onchange="rolefield()">
-        <option selected>Choose Role</option>
-        {% for i in role %}
-            <option value="{{i.id}}" {% if request.GET.role == i.id|lower %}selected{% endif %}>{{i.name}}</option>
-        {% endfor %}
-    </select>
-<br/>
-    <label for="topic">Topic</label>
-    <select class="form-select" aria-label="Default select example" id="topic">
-        <option selected>Choose Topic</option>
-        {% for i in topic %}
-            <option value="{{i.id}}">{{i.name}}</option>
-        {% endfor %}
-    </select>
-    <br/>
+<html>
+<body>   
+<form action ="{% url 'filter'%}">
+    
+
+<select name = "department">
+    <option disabled="true" selected>-- Choose the Department --</option>
+    <option>It</option>
+    <option>Accounts</option>
+    <option>Sales</option>
+</select>
+<select name = "topic">
+    <option disabled="true" selected>-- Topic --</option>
+    <option>Developer</option>
+    <option>Accounts</option>
+    <option>Marketing</option>
+</select>
+<div>
+    <input name ="role">
+    <input type="checkbox" name="python">python 
+    <input type="checkbox" name="Accountant">Accountant
+    <input type="checkbox" name="Client and marketing">Client and support
+
 </div>
-<script>
-    function departmentfield(){
-        departmentid = document.getElementById('department').value;
-        window.location = "/?department="+departmentid;
-    }
-    function rolefield(){
-       roleid = document.getElementById('role').value;
-       window.location = "/?department="+'{{request.GET.department}}'+"&role="+roleid;
-    }
-</script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
+    
+     <input type="submit" value="click"> 
+ 
+
+</form> 
 </body>
-<button>submit</button>
+
 </html>
-
-
-{% endblock %}
