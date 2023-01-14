@@ -43,38 +43,26 @@ class Test(models.Model):
     role = models.CharField(max_length=50, null=True ,blank=True)
     topic = models.CharField(max_length=50, null=True ,blank=True)
     question = models.CharField(max_length=255, null=True ,blank=True)
-    answeroption = models.CharField(max_length=50, null=True ,blank=True)
+    answeroption=models.CharField(max_length=200,blank=True,null=True)
     a = models.CharField(max_length=50, null=True ,blank=True)
     b = models.CharField(max_length=50, null=True ,blank=True)
     c = models.CharField(max_length=50, null=True ,blank=True)
     d = models.CharField(max_length=50, null=True ,blank=True)
+    # cat=(('a','a'),('b','b'),('c','c'),('d','d'))
+    
+
     def __str__(self):
         return self.department
 
 
-class Testaccount(models.Model): 
-    department = models.CharField(max_length=50, null=True ,blank=True)
-    role = models.CharField(max_length=50, null=True ,blank=True)
-    topic = models.CharField(max_length=50, null=True ,blank=True)
-    question = models.CharField(max_length=255, null=True ,blank=True)
-    answeroption = models.CharField(max_length=50, null=True ,blank=True)
-    a = models.CharField(max_length=50, null=True ,blank=True)
-    b = models.CharField(max_length=50, null=True ,blank=True)
-    c = models.CharField(max_length=50, null=True ,blank=True)
-    d = models.CharField(max_length=50, null=True ,blank=True)
-    def __str__(self):
-        return self.department
+class AptituteTest(models.Model):
+    question_number = models.IntegerField(blank=True,null=True)
+    testqueestion = models.ForeignKey(Test, on_delete=models.DO_NOTHING, related_name='test_question')
+    candidate = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='candidate', blank=True, null=True)
+    started_on = models.DateTimeField()
+    ended_on = models.DateTimeField()
 
-        
-class Testsale(models.Model): 
-    department = models.CharField(max_length=50, null=True ,blank=True)
-    role = models.CharField(max_length=50, null=True ,blank=True)
-    topic = models.CharField(max_length=50, null=True ,blank=True)
-    question = models.CharField(max_length=255, null=True ,blank=True)
-    answeroption = models.CharField(max_length=50, null=True ,blank=True)
-    a = models.CharField(max_length=50, null=True ,blank=True)
-    b = models.CharField(max_length=50, null=True ,blank=True)
-    c = models.CharField(max_length=50, null=True ,blank=True)
-    d = models.CharField(max_length=50, null=True ,blank=True)
     def __str__(self):
-        return self.department
+        return f'Question {self.testqueestion.question} asked to {self.candidate.username}'
+
+

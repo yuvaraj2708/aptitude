@@ -36,16 +36,14 @@
     <h2>Total Number of questions: {{ count }}</h2>
     <h2>Page Number: {{ page.number }}</h2>
 
-    {% for test in page.object_list %}
-    <div class="test-item">{{ test.id }} .
-
-        
-        {{ test.question }}<br>    
+    {% for question in questions %}
+    <div class="test-item">{{ test.id }}
+        {{ question.question }}<br>    
         <select>
-       <option>A.{{ test.a }}</option><br>
-        <option>B.{{ test.b }}</option><br>
-        <option>C.{{ test.c }}</option><br>
-        <option>D.{{ test.d }}</option><br>
+       <option>A.{{ question.a }}</option><br>
+        <option>B.{{ question.b }}</option><br>
+        <option>C.{{ question.c }}</option><br>
+        <option>D.{{ question.d }}</option><br>
         </select>    
         </div> <br>
     {% endfor %}

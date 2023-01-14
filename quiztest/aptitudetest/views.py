@@ -11,10 +11,12 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.contrib.auth import authenticate,login
 from django.contrib.auth.decorators import login_required
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator,EmptyPage
 from django.shortcuts import render
 from .models import Department, Role,Topic 
 from django.http import HttpResponse
+from django.contrib.auth.models import User
+from django.contrib import auth
 # Create your views here.
 
 
@@ -77,50 +79,6 @@ def register_attempt(request):
 
     return render(request , 'register.html')
 
-def success(request):
-    return render(request , 'success.html')
-
-
-def token_send(request):
-    return render(request , 'token_send.html')
-
-
-
-def verify(request , auth_token):
-    try:
-        profile_obj = Profile.objects.filter(auth_token = auth_token).first()
-    
-
-        if profile_obj:
-            if profile_obj.is_verified:
-                messages.success(request, 'Your account is already verified.')
-                return redirect('/accounts/login')
-            profile_obj.is_verified = True
-            profile_obj.save()
-            messages.success(request, 'Your account has been verified.')
-            return redirect('/accounts/login')
-        else:
-            return redirect('/error')
-    except Exception as e:
-        print(e)
-        return redirect('/')
-
-def error_page(request):
-    return  render(request , 'error.html')
-
-
-
-
-
-
-
-# def send_mail_after_registration(email , token):
-#     subject = 'Your accounts need to be verified'
-#     message = f'Hi paste the link to verify your account http://127.0.0.1:8000/verify/{token}'
-#     email_from = settings.EMAIL_HOST_USER
-#     recipient_list = [email]
-#     send_mail(subject, message , email_from ,recipient_list )
-
 
 def simple_upload(request):
     if request.method == 'POST':
@@ -149,24 +107,9 @@ def simple_upload(request):
         value.save()       
     return render(request,'upload.html')
 
-
-
-
-
-
-
 def dashboard(request):
     return render(request,'mainhr.html')
 
-
-
-
-
-
-
-
-from django.contrib.auth.models import User
-from django.contrib import auth
 
 def signup(request):
     if request.method == "POST":
@@ -183,6 +126,7 @@ def signup(request):
     else:
         return render(request,'hrregister.html')
 
+
 def login(request):
     if request.method == 'POST':
         user = auth.authenticate(username=request.POST['username'],password = request.POST['password'])
@@ -194,87 +138,46 @@ def login(request):
     else:
         return render(request,'hrlogin.html')
 
-from django.shortcuts import render
-from django.core.paginator import Paginator 
 
-from .models import Test
-
-def quiz_test(request):
-    test = Test.objects.all()
-
-    test_paginator = Paginator(test, 1)
-
-    page_num = request.GET.get('page')
-
-    page = test_paginator.get_page(page_num)
-
-    context = {
-        'count' : test_paginator.count,
-        'page' : page
-    }
-    return render(request, 'test.html', context)
 
 def department(request):
 
-    # departmentid = request.GET.get('department', None)
-    # roleid = request.GET.get('role', None)
-    # role = None
-    # topic  = None
-    # if departmentid:
-    #     getdepartment = Department.objects.get(id=departmentid)
-    #     role = Role.objects.filter(department=getdepartment)
-    # if roleid:
-    #        getrole = Role.objects.get(id=roleid)
-    #        topic = Topic.objects.filter(Role=getrole)
-    # department = Department.objects.all()
-    # # if department is not None:    
-    # #     departmentid = Department.objects.filter(id = 1)
-    # #     roleid = Role.objects.filter(id = 1)
-    # #     topic = Topic.objects.filter(id = 1)
-    # #     return redirect('login/department/test1')
+   
     return render(request, 'department.html')
 
 
 
 def filter(request):
-
     results = request.GET['department']
     topics = request.GET['topic']
     roles = request.GET['role']
-    return render(request,"departmentfilter.html",{'department':results,'topic':topics,'role':roles})
 
-    
+    questions = Test.objects.filter(department=results, role=roles, topic=topics)
+  
+    test = Test.objects.all()
 
-def testaccounts(request):
-    testaccount = Testaccount.objects.all()
-
-    testaccount_paginator = Paginator(testaccount, 1)
+    test_paginator = Paginator(test, 21)
 
     page_num = request.GET.get('page')
 
-    page = testaccount_paginator.get_page(page_num)
+    page = test_paginator.get_page(page_num)
 
+  
+   
+   
     context = {
-        'count' : testaccount_paginator.count,
-        'page' : page
+        'questions': questions,
+        'department':results,
+        'topic':topics,
+        'role':roles,
+        'count' : test_paginator.count,
+        'page' : page,
+
+        
     }
-    return render(request, 'testaccounts.html', context)
-    
-def testsales(request):
-    testsale = Testsale.objects.all()
+    return render(request,"departmentfilter.html", context)
 
-    testsale_paginator = Paginator(testsale, 1)
-
-    page_num = request.GET.get('page')
-
-    page = testsale_paginator.get_page(page_num)
-
-    context = {
-        'count' : testsale_paginator.count,
-        'page' : page
-    }
-    return render(request, 'testsales.html', context)
-    
 
     
+   
 

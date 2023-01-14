@@ -1,11 +1,45 @@
 <html>
     </html>
     <head>
+        <style>
+             .page-links {
+            color: rgb(10, 10, 10); 
+            text-align: center;
+            margin: auto;
+            width: 50%
+            
+        }
+        .test-item {
+            text-align: center;
+            border-style: solid;
+            border-width: thin;
+            width: 50%;
+            margin: auto;
+        }
+        </style>
 </head>
 <body>
    department:<b>{{department}}</b>
    topic:<b>{{topic}}</b>
    role:<b>{{role}}</b>
+
+   {% for question in questions %}
+    <div class="test-item">{{ question.id }}
+        {{ question.question }}<br>    
+      <input type="radio" class="mr-3">A. {{ question.a }}<br>
+      <input type="radio" class="mr-3">B. {{ question.b }}<br>
+      <input type="radio" class="mr-3">C. {{ question.c }}<br>
+      <input type="radio" class="mr-3">D. {{ question.d }}<br>
+    </div><hr>
+    {% endfor %}
+    <div class="page-links">
+        {% if page.has_previous %}
+        <a href="{% url 'filter' %}?page={{ page.previous_page_number }}">Previous Page</a>
+        {% endif %}
+        {% if page.has_next %}
+        <a href="{% url 'filter' %}?page={{ page.next_page_number }}">Next Page</a>
+        {% endif %}
+    </div>
 
 <a href="{% url 'department' %}">Back to Department</a>
 
