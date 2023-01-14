@@ -8,16 +8,16 @@ admin.site.site_header = "My Site"
 from .models import *
 
 
-admin.site.register(QuesModel)
+admin.site.register(Test)
 admin.site.register(login)
 admin.site.register(Depart)
 
 #samples
 #sample
-admin.site.register(Department)
-admin.site.register(Role)
-admin.site.register(Topic)
-admin.site.register(Person)
+# admin.site.register(Department)
+# admin.site.register(Role)
+# admin.site.register(Topic)
+# admin.site.register(Person)
 
 
 

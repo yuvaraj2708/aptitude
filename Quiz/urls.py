@@ -6,9 +6,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("",views.log,name="Home"),
     path("register/",views.reg,name="registerpage"),
-    path("sample/",views.department,name="Dependant"),
+    # path("sample/",views.department,name="Dependant"),
     path("test/",views.Test,name="testpage"),
-    path("depart/",views.sample,name="Sample")
+    path("depart/",views.department,name="Department"),
+    path("filter/",views.filter,name ="Filter")
 
    
 

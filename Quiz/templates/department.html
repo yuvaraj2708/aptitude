@@ -48,43 +48,39 @@ h3{
 
 </style>
 <body>
-<form action="{% url 'filter' %}">
+<form action="{% url 'Filter' %}">
 <div class="container mt-5" style="width:40%">
     <h3>Quiz Test </h3><br>
     <label for="department">Department</label>
    
 
-    <select class="form-select" aria-label="Default select example" id="department" onchange="departmentfield()">
+    <select class="form-select" aria-label="Default select example" name ="department">
         <option selected>Choose Department</option>
-        
         <option>IT</option>
         <option>SALES</option>
         <option>ACCOUNTS</option>
         {% for i in department %}
-        
-    
-            <!-- <option value="{{i.id}}" {% if request.GET.department == i.id|lower %}selected{% endif %}>{{i.name}}</option>
-        {% endfor %} -->
-    </select>
+        {% endfor %}
+        </select>
     <br/>
 
     <label for="role">Role</label>
-    <select class="form-select" aria-label="Default select example" id="role" onchange="rolefield()">
+    <select class="form-select" aria-label="Default select example" name="role">
         <option selected>Choose Role</option>
         <option>DEVELOPER</option>
         <option>MARKETING</option>
         <option>ACCOUNTANCY</option>
         {% for i in role %}
-            <option value="{{i.id}}" {% if request.GET.role == i.id|lower %}selected{% endif %}>{{i.name}}</option>
+          
         {% endfor %}
     </select>
 <br/>
 
-    <label for="topic">Topic:</label><br><br>
+    <label names="topic">Topic:</label><br><br>
 
   
        <label>
-       <input type="checkbox" name="pythone" value="python">python
+       <input type="checkbox" name="python" value="python">python
        </label><br><br>
        <label>
         <input type="checkbox"> Product Awareness</label><br><br>
@@ -92,7 +88,7 @@ h3{
         <input type="checkbox" name="product awareness " value="product">Accountant</label><br><br>
         </select><br>
       <div class="btn">
-       <button type="submit">Submit</button></div>
+       <button type="submit" value="click">Submit</button></div>
     <br/>
 </div>
 </form>

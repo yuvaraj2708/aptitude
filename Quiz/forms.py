@@ -3,7 +3,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
-from Quiz.models import Person, Role
+# from Quiz.models import Person, Role
 # class UserRegistrationForm(forms.Form):
 #     username = forms.CharField(
 #         required = True,

@@ -6,7 +6,7 @@ from django.contrib import messages
 # from django.contrib.auth.forms import UserCreationForm
 from .forms import *
 from django.contrib.auth.models import User
-from .models import login
+
 from .models import *
 
 # def homepage(request):
@@ -57,23 +57,38 @@ def Test(request):
     return render(request,'Test.html')
 
 #samples
+# def department(request):
+#     departmentid = request.GET.get('department', None)
+#     roleid = request.GET.get('role', None)
+#    if departmentid:
+#         getdepartment = Department.objects.get(id=departmentid)
+#         role = Role.objects.filter(department=getdepartment)
+#      if roleid:
+#         getrole = Role.objects.get(id=roleid)
+#         topic = Topic.objects.filter(role=getrole)
+#      department = Department.objects.all()
+#     return render(request, 'sample.html', locals())
+
+# def filtert(request):
+#     result = request.GET['department']
+
+#     roles = request.GET['role']
+
+#     questions = Test.objects.filter(department=result,role=roles)
+
+#     context ={
+#         "questions":questions,
+#         "department":result,
+#         "role":roles,
+
+
+#     }
+#     return render(request,"filter.html",context)
+
 def department(request):
-    departmentid = request.GET.get('department', None)
-    roleid = request.GET.get('role', None)
-
-  
-
-    if departmentid:
-        getdepartment = Department.objects.get(id=departmentid)
-        role = Role.objects.filter(department=getdepartment)
-
-    if roleid:
-        getrole = Role.objects.get(id=roleid)
-       
-        topic = Topic.objects.filter(role=getrole)
-    department = Department.objects.all()
-    return render(request, 'sample.html', locals())
-
-def sample(request):
-    
     return render(request,"department.html")
+
+def filter(request):
+    result =request.GET['department']
+    roles = request.GET['role']
+    return render(request,"filter.html",{'department':result,'role':roles})
