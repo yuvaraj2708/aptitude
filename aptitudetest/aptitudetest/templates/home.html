@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+  <!-- Hi {{ user.username }}! -->
+  <div class="row py-4">
+    <div class="col-12 px-4">
+      <h2 class="text-center">Welcome to MargyTech Aptitude Test</h2>
+      <hr>
+      
+      <div class="rules">
+        <h3>Rules and Regulations:</h3>
+        <ul>
+          <li>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</li>
+          <li>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s. </li>
+          <li>When an unknown printer took a galley of type and scrambled it to make a type specimen book.</li>
+          <li>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. </li>
+          <li>It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages</li>
+          <li>More recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</li>
+          <li>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</li>
+          <li>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s. </li>
+          <li>When an unknown printer took a galley of type and scrambled it to make a type specimen book.</li>
+          <li>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. </li>
+          <li>It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages</li>
+          <li>More recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-12 rules my-5">
+      <div class="row">
+        <div class="col-6">
+            <label for="department" class="form-label">Select Department:</label>
+            <select class="form-select" id="department" name="department">
+              <option>IT</option>
+              <option>ACCOUNTS</option>
+              <option>SALE AND MARKETING</option>
+              <option>HUMAN RESOURCE</option>
+            </select>
+        </div>
+
+        <div class="col-6">
+          <label for="role" class="form-label">Select Role:</label>
+          <select class="form-select" id="role" name="role">
+            <option>SOFTWARE DEVELOPER</option>
+            <option>SOFTWARE TESTER</option>
+            <option>DESKTOP SUPPORT ENGINEER</option>
+            <option>SALES EXECUTIVE</option>
+            <option>HR EXECUTIVE</option>
+          </select>
+        </div>
+
+        <div class="col-6 my-3">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="">
+            <label class="form-check-label" for="">PYTHON</label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="">
+            <label class="form-check-label" for="">DJANGO</label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="">
+            <label class="form-check-label" for="">SQL</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="form-group center">
+          <button class="submit-btn" type="submit">Start Test</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <a href="{% url 'logout' %}">Log Out</a> -->
+{% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}">Log In</a>
+{% endif %}
+{% endblock %}

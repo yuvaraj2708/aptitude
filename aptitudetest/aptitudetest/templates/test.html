@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+  <!-- Hi {{ user.username }}! -->
+  <div class="row py-4">
+    <div class="col-3">
+      <div class="row px-4">
+          <div class="col-5 attempted p-0 mr-1 mb-1" id="my-div">
+            <a href="#" class="fill-div" title="Attempted">1</a>
+          </div>
+        
+          <div class="col-5 attempted p-0 mr-1 mb-1">
+            <a href="#" class="fill-div" title="Attempted">2</a>
+          </div>
+
+          <div class="col-5 not-attempted p-0 mr-1 mb-1">
+            <a href="#" class="fill-div text-margy-blue" title="Not Attempted">3</a>
+          </div>
+
+          <div class="col-5 skipped p-0 mr-1 mb-1">
+            <a href="#" class="fill-div text-margy-blue" title="Skipped">4</a>
+          </div>
+
+          <div class="col-5 not-attempted p-0 mr-1 mb-1">
+            <a href="#" class="fill-div text-margy-blue" title="Not Attempted">5</a>
+          </div>
+
+          <div class="col-5 not-attempted p-0 mr-1 mb-1">
+            <a href="#" class="fill-div text-margy-blue" title="Not Attempted">6</a>
+          </div>
+
+          <div class="col-5 not-attempted p-0 mr-1 mb-1">
+            <a href="#" class="fill-div text-margy-blue" title="Not Attempted">7</a>
+          </div>
+
+          <div class="col-5 not-attempted p-0 mr-1 mb-1">
+            <a href="#" class="fill-div text-margy-blue" title="Not Attempted">8</a>
+          </div>
+
+          <div class="col-5 not-attempted p-0 mr-1 mb-1">
+            <a href="#" class="fill-div text-margy-blue" title="Not Attempted">9</a>
+          </div>
+
+          <div class="col-5 not-attempted p-0 mr-1 mb-1">
+            <a href="#" class="fill-div text-margy-blue" title="Not Attempted">10</a>
+          </div>
+
+          <!------------------------------------------------------>
+
+          <div class="col-5 not-attempted p-0 mr-1 mb-1">
+            <a href="#" class="fill-div text-margy-blue" title="Not Attempted">11</a>
+          </div>
+
+          <div class="col-5 not-attempted p-0 mr-1 mb-1">
+            <a href="#" class="fill-div text-margy-blue" title="Not Attempted">12</a>
+          </div>
+
+          <div class="col-5 not-attempted p-0 mr-1 mb-1">
+            <a href="#" class="fill-div text-margy-blue" title="Not Attempted">13</a>
+          </div>
+
+          <div class="col-5 not-attempted p-0 mr-1 mb-1">
+            <a href="#" class="fill-div text-margy-blue" title="Not Attempted">14</a>
+          </div>
+
+          <div class="col-5 not-attempted p-0 mr-1 mb-1">
+            <a href="#" class="fill-div text-margy-blue" title="Not Attempted">15</a>
+          </div>
+
+          <div class="col-5 not-attempted p-0 mr-1 mb-1">
+            <a href="#" class="fill-div text-margy-blue" title="Not Attempted">16</a>
+          </div>
+
+          <div class="col-5 not-attempted p-0 mr-1 mb-1">
+            <a href="#" class="fill-div text-margy-blue" title="Not Attempted">17</a>
+          </div>
+
+          <div class="col-5 not-attempted p-0 mr-1 mb-1">
+            <a href="#" class="fill-div text-margy-blue" title="Not Attempted">18</a>
+          </div>
+
+          <div class="col-5 not-attempted p-0 mr-1 mb-1">
+            <a href="#" class="fill-div text-margy-blue" title="Not Attempted">19</a>
+          </div>
+
+          <div class="col-5 not-attempted p-0 mr-1 mb-1">
+            <a href="#" class="fill-div text-margy-blue" title="Not Attempted">20</a>
+          </div>
+      </div>
+    </div>
+
+    <div class="col-9">
+      <div class="row mb-3">
+        <h3 class="text-margy-blue">Q. Which one of the following is not a feature of Python Programming language?</h3>
+      </div>
+
+      <form method="post">
+        <div class="row">
+          <div class="col-12 mb-3">
+            <input class="form-check-input" type="radio" value="" id="option_a" name="option">
+            <label class="form-check-label ml-3" for="">Object Oriented Programming</label>
+          </div>
+
+          <div class="col-12 mb-3">
+            <input class="form-check-input" type="radio" value="" id="option_b" name="option">
+            <label class="form-check-label ml-3" for="">Styling the web page</label>
+          </div>
+
+          <div class="col-12 mb-3">
+            <input class="form-check-input" type="radio" value="" id="option_c" name="option">
+            <label class="form-check-label ml-3" for="">Machine Learning</label>
+          </div>
+          
+          <div class="col-12 mb-3">
+            <input class="form-check-input" type="radio" value="" id="option_d" name="option">
+            <label class="form-check-label ml-3" for="">Data Science</label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-2">
+            <button class="_btn_04" type="submit">Previous</button>
+          </div>
+
+          <div class="col-2">
+            <button class="_btn_04" type="submit">Next</button>
+          </div>
+
+          <div class="col-2">
+            <button class="_btn_04" type="submit">Skip</button>
+          </div>
+
+          <div class="col-2">
+            <button class="_btn_04" type="submit">Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- <a href="{% url 'logout' %}">Log Out</a> -->
+{% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}">Log In</a>
+{% endif %}
+{% endblock %}
