@@ -17,6 +17,10 @@ from .models import Department, Role,Topic
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib import auth
+from rest_framework.viewsets import ModelViewSet
+from rest_framework.permissions import IsAuthenticated
+from .serializers import *
+from django.template import loader
 # Create your views here.
 
 
@@ -148,36 +152,56 @@ def department(request):
 
 
 def filter(request):
-    results = request.GET['department']
-    topics = request.GET['topic']
-    roles = request.GET['role']
+    results = request.GET.get('department')
+    roles = request.GET.get('role')
+    topics = request.GET.get('topic')
+   
 
     questions = Test.objects.filter(department=results, role=roles, topic=topics)
-  
-    test = Test.objects.all()
-
-    test_paginator = Paginator(test, 21)
-
-    page_num = request.GET.get('page')
-
-    page = test_paginator.get_page(page_num)
-
-  
-   
-   
+    book_paginator = Paginator(questions,12)
+    page_num = request.GET.get('page',4)
+    page = book_paginator.get_page(page_num)
     context = {
         'questions': questions,
         'department':results,
         'topic':topics,
         'role':roles,
-        'count' : test_paginator.count,
-        'page' : page,
-
+        'count': book_paginator.count,
+        'page' : page
         
     }
     return render(request,"departmentfilter.html", context)
 
+def add(request):
+    return render(request,"addquestion.html")
+
+
+def addrecord(request):
+  department = request.POST['department']
+  role = request.POST['role']
+  topic = request.POST['topic']
+  question = request.POST['question']
+  answeroption = request.POST['answeroption']
+  a = request.POST['a']
+  b = request.POST['b']
+  c = request.POST['c']
+  d = request.POST['d']
+
+  member = Test(department = department, role=role,topic=topic,question=question,answeroption=answeroption,a=a,b=b,c=c,d=d)
+  member.save()
+  return redirect('/')
+
+
+def result(request):
+  question = Test.objects.all()
+  context = {
+    'question': question,
+  }
+  return render(request,"result.html",context)
 
     
-   
+class BookApiView(ModelViewSet):
+    queryset = Test.objects.all()
+    serializer_class=TestSerializer
+    permission_class = [IsAuthenticated ] 
 

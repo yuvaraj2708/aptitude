@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'aptitudetest',
     'import_export',
     'pure_pagination',
+    'rest_framework',
     
 ]
 
