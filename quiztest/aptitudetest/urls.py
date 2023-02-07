@@ -16,7 +16,9 @@ urlpatterns = [
     path('filter/' , filter , name="filter"),
     path('add/addrecord/', addrecord, name='addrecord'),
     path('add/', add, name='addrecord'),
-    path('result/', result, name='result'),
+    path('submit/', submit, name='submit'),
+    path('detail/', detail, name='detail'),
+    # path('result/', result, name='result'),
     
     ]
 

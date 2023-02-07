@@ -19,19 +19,31 @@
         </style>
 </head>
 <body>
+    <form method="post" action="{% url 'submit' %}">
+        {% csrf_token %}
    department:<b>{{department}}</b>
    topic:<b>{{topic}}</b>
    role:<b>{{role}}</b>
 
-   {% for question in questions %}
-    <div class="test-item">{{ question.id }}
-        {{ question.question }}<br>    
-      <input type="radio" class="mr-3">A. {{ question.a }}<br>
-      <input type="radio" class="mr-3">B. {{ question.b }}<br>
-      <input type="radio" class="mr-3">C. {{ question.c }}<br>
-      <input type="radio" class="mr-3">D. {{ question.d }}<br>
-    </div><hr>
+   <input type="text" name="department" value="IT">
+   <input type="text" name="role" value="DEVELOPER">
+   <input type="text" name="topic" value="PYTHON">
+
+   {% for q_page in page %}
+    <div class="test-item">
+        ({{ q_page.id }}) {{ q_page.question }}<br> 
+      <input type="radio" required name="answer" class="mr-3">A. {{ q_page.a }}<br>
+      <input type="radio" required name="answer" class="mr-3">B. {{ q_page.b }}<br>
+      <input type="radio" required name="answer" class="mr-3">C. {{ q_page.c }}<br>
+      <input type="radio" required name="answer" class="mr-3">D. {{ q_page.d }}<br>
+    </div>    
     {% endfor %}
+    <input type="submit" value="skip" class="btn btn-warning skipBtn" />
+    <input type="submit" value="Submit" class="btn btn-primary submitBtn"/>
+    </form>
+
+<a href="{% url 'department' %}">Back to Department</a>
+
     <div class="page-links">
         {% if page.has_previous %}
         <a href="{% url 'filter' %}?page={{ page.previous_page_number }}">Previous Page</a>
@@ -40,8 +52,14 @@
         <a href="{% url 'filter' %}?page={{ page.next_page_number }}">Next Page</a>
         {% endif %}
     </div>
-
-<a href="{% url 'department' %}">Back to Department</a>
+   
 
 </body>
+<script type="text/javascript">
+    $(document).ready(function(){
+          $(",submitBtn").on('click',function(){
+          });
+    });
+    </script>
 </html>
+

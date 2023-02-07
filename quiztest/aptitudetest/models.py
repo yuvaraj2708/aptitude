@@ -66,3 +66,9 @@ class AptituteTest(models.Model):
         return f'Question {self.testqueestion.question} asked to {self.candidate.username}'
 
 
+class Answer(models.Model):
+    department = models.ForeignKey(Department, on_delete=models.CASCADE, null=True)
+    Role = models.ForeignKey(Role, on_delete=models.CASCADE, null=True)
+    topic = models.ForeignKey(Topic, on_delete=models.CASCADE, null=True)
+    question = models.ForeignKey(Test, on_delete=models.CASCADE, null=True)
+    

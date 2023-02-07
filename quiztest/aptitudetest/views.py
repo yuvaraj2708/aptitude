@@ -145,32 +145,56 @@ def login(request):
 
 
 def department(request):
+   return render(request, 'department.html')
 
-   
-    return render(request, 'department.html')
-
+def submit(request):
+   return render(request, 'submit.html')
 
 
 def filter(request):
+    # results = request.POST.get('department')
+    # roles = request.POST.get('role')
+    # topics = request.POST.get('topic')
+
+    # print(f'{results}, {roles}, {topics}')
+    
+
+    # questions = Test.objects.filter(department=results, role=roles, topic=topics)
+    questions = Test.objects.all()
+    book_paginator = Paginator(questions, 1)
+    page_num = request.GET.get('page')
+    page = book_paginator.get_page(page_num)
+    print('questions', questions)
+    # print('page', page)
+    # print('book_paginator', book_paginator)
+    # print('page_num', page_num)
+     
+    context = {
+        'questions': questions,
+        # 'department':results,
+        # 'topic':topics,
+        # 'role':roles,
+        'count': book_paginator.count,
+        'page' : page 
+          }
+    
+    if 'skip' in request.POST:
+            return HttpResponse('skip is clicked!!!')
+    return render(request,"departmentfilter.html", context)
+
+
+def detail(request): 
     results = request.GET.get('department')
     roles = request.GET.get('role')
     topics = request.GET.get('topic')
-   
+    
 
     questions = Test.objects.filter(department=results, role=roles, topic=topics)
-    book_paginator = Paginator(questions,12)
-    page_num = request.GET.get('page',4)
-    page = book_paginator.get_page(page_num)
-    context = {
-        'questions': questions,
-        'department':results,
-        'topic':topics,
-        'role':roles,
-        'count': book_paginator.count,
-        'page' : page
-        
-    }
-    return render(request,"departmentfilter.html", context)
+    questions = Answer.object.POST.all()   
+    questions.save()
+    return render(request,'detail.html')
+ 
+
 
 def add(request):
     return render(request,"addquestion.html")
@@ -205,3 +229,11 @@ class BookApiView(ModelViewSet):
     serializer_class=TestSerializer
     permission_class = [IsAuthenticated ] 
 
+
+
+
+
+
+
+
+   
