@@ -1,4 +1,4 @@
-<html>
+<!-- <html>
     </html>
     <head>
         <style>
@@ -19,29 +19,34 @@
         </style>
 </head>
 <body>
-    <form method="post" action="{% url 'submit' %}">
+    <form method="GET">
         {% csrf_token %}
-   department:<b>{{department}}</b>
-   topic:<b>{{topic}}</b>
-   role:<b>{{role}}</b>
+   <b>{{department}}</b>
+   <b>{{topic}}</b>
+   <b>{{role}}</b>
 
-   <input type="text" name="department" value="IT">
+   <!-- <input type="text" name="department" value="IT">
    <input type="text" name="role" value="DEVELOPER">
-   <input type="text" name="topic" value="PYTHON">
+   <input type="text" name="topic" value="PYTHON"> -->
 
-   {% for q_page in page %}
+   <!-- {% for q_page in page %}
+   department:<b> {{q_page.department}}</b><br> topic:<b>{{q_page.role}}</b><br>role:<b>{{q_page.topic}}</b><br>
     <div class="test-item">
-        ({{ q_page.id }}) {{ q_page.question }}<br> 
+       
+
+        ({{ q_page.id }}) {{ q_page.question }}
+        
+           {{q_page.}}    <br> 
       <input type="radio" required name="answer" class="mr-3">A. {{ q_page.a }}<br>
       <input type="radio" required name="answer" class="mr-3">B. {{ q_page.b }}<br>
       <input type="radio" required name="answer" class="mr-3">C. {{ q_page.c }}<br>
       <input type="radio" required name="answer" class="mr-3">D. {{ q_page.d }}<br>
     </div>    
-    {% endfor %}
+   
     <input type="submit" value="skip" class="btn btn-warning skipBtn" />
     <input type="submit" value="Submit" class="btn btn-primary submitBtn"/>
     </form>
-
+    
 <a href="{% url 'department' %}">Back to Department</a>
 
     <div class="page-links">
@@ -52,14 +57,107 @@
         <a href="{% url 'filter' %}?page={{ page.next_page_number }}">Next Page</a>
         {% endif %}
     </div>
-   
-
+    {% endfor %}
+  
 </body>
-<script type="text/javascript">
-    $(document).ready(function(){
-          $(",submitBtn").on('click',function(){
-          });
-    });
-    </script>
-</html>
+ 
+</html> --> 
+<style>
+    p {
+  text-align: q;
+  font-size: 30px;
+  margin-top: 0px;
+}
+</style>
+<div class="container ">
+    <p id="demo"></p>
+    <h1> Quiz</h1>
+     
+    
+     
 
+    <b>{{request.session.department}}</b>
+   <b>{{request.session.topic}}</b>
+   <b>{{request.session.role}}</b>
+     <form method='post' action=''>
+        {% csrf_token %}
+        {% for q_page in page %}
+        <div class="form-group">
+            {{q_page.id}}. <label for="question">{{q_page.question}}</label>
+        </div>
+        <div class="form-check">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="{{q_page.question}}" id="gridRadios1" value="option1" checked>
+                <label class="form-check-label" for="gridRadios1">
+                    {{q_page.a}}
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="{{q_page.question}}" id="gridRadios2" value="option2">
+                <label class="form-check-label" for="gridRadios2">
+                    {{q_page.b}}
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="{{q_page.question}}" id="gridRadios1" value="option3">
+                <label class="form-check-label" for="gridRadios1">
+                    {{q_page.c}}
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="{{q_page.question}}" id="gridRadios2" value="option4">
+                <label class="form-check-label" for="gridRadios2">
+                    {{q_page.d}}
+                </label>
+                
+            </div>
+            <br>
+        </div>    
+        
+        {% endfor %}
+        <input id='timer' type='hidden' name="timer" value="">
+        <br>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+      <div class="page-links">
+        {% if page.has_previous %}
+        <a href="{% url 'filter' %}?page={{ page.previous_page_number }}">Previous Page</a>
+        {% endif %}
+        {% if page.has_next %}
+        <a href="{% url 'filter' %}?page={{ page.next_page_number }}">Next Page</a>
+        {% endif %}
+    </div>
+        {% block script %}
+            <script>
+     
+// Set the date we're counting down to
+var countDownDate = new Date("Jan 5, 2024 15:37:25").getTime();
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+  // Get today's date and time
+  var now = new Date().getTime();
+    
+  // Find the distance between now and the count down date
+  var distance = countDownDate - now;
+    
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 10 * 30 * 24));
+  var hours = Math.floor((distance % (1000 * 10 * 30 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 10 * 60)) / (1000 * 20));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+  // Output the result in an element with id="demo"
+  document.getElementById("demo").innerHTML = minutes + "m " + seconds + "s ";
+    
+  // If the count down is over, write some text 
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("demo").innerHTML = "EXPIRED";
+  }
+}, 1000);
+</script>
+        {% endblock script %}
+     
+    </div>

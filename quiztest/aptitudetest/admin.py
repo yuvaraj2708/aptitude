@@ -14,6 +14,8 @@ class PersonAdmin(ImportExportModelAdmin):
 
 admin.site.register(Hrlogin)
 
+
+
 admin.site.register(Answer)
 admin.site.register(Department)
 admin.site.register(Role)

@@ -8,19 +8,13 @@ urlpatterns = [
     path('',rules,name="rules"),
     path('login/' , login_attempt , name="login_attempt"),
     path('register/' , register_attempt , name="register_attempt"),
-    path('department/test1/import/', simple_upload,name="import"),
     path('hrlogin/' , login , name="login"),
     path('hrregister/' , signup , name="registration"),
     path('hrlogin/dashboard/' , dashboard , name="dashboard"),
     path('login/department/' , department , name="department"),
     path('filter/' , filter , name="filter"),
-    path('add/addrecord/', addrecord, name='addrecord'),
-    path('add/', add, name='addrecord'),
-    path('submit/', submit, name='submit'),
-    path('detail/', detail, name='detail'),
-    # path('result/', result, name='result'),
-    
-    ]
+   
+      ]
 
 
 rout = routers.SimpleRouter()

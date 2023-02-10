@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'import_export',
     'pure_pagination',
     'rest_framework',
+    'livereload',
     
 ]
 
@@ -52,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'livereload.middleware.LiveReloadScript',
 ]
 
 ROOT_URLCONF = 'src.urls'

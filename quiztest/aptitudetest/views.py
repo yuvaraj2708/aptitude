@@ -39,8 +39,8 @@ def login_attempt(request):
         user = authenticate(username = username , password = password)
         print(f'user {user}')
         if user is not None:
-             login(request)
-             return redirect('/login/department')
+            login(request)
+            return redirect('/login/department')
         else:
            
           messages.error(request, 'Wrong password.')
@@ -84,32 +84,7 @@ def register_attempt(request):
     return render(request , 'register.html')
 
 
-def simple_upload(request):
-    if request.method == 'POST':
-        person_resource = PersonResource()
-        dataset = Dataset()
-        new_person = request.FILES['myfile']
 
-        if not new_person.name.endswith('xlsx'):
-            messages.info(request,'wrong format')
-            return render(request,'upload.html')
-
-        imported_data = dataset.load(new_person.read(),format='xlsx')
-        for data in imported_data:
-            value = Test(
-        		data[0],
-        		data[1],
-        		data[2],
-        		data[3],
-                data[4],
-                data[5],
-                data[6],
-                data[7],
-                data[8],
-                data[9]
-        		)
-        value.save()       
-    return render(request,'upload.html')
 
 def dashboard(request):
     return render(request,'mainhr.html')
@@ -145,83 +120,67 @@ def login(request):
 
 
 def department(request):
-   return render(request, 'department.html')
-
-def submit(request):
-   return render(request, 'submit.html')
-
-
-def filter(request):
-    # results = request.POST.get('department')
-    # roles = request.POST.get('role')
-    # topics = request.POST.get('topic')
-
-    # print(f'{results}, {roles}, {topics}')
     
+    
+    return render(request,"Department.html")
 
-    # questions = Test.objects.filter(department=results, role=roles, topic=topics)
-    questions = Test.objects.all()
+  
+def filter(request):
+   
+    
+    department=request.GET.get('department')
+    role=request.GET.get('role')
+    topic=request.GET.get('topic') 
+    questions=  Test.objects.filter(department=department,role=role,topic=topic)
+
     book_paginator = Paginator(questions, 1)
     page_num = request.GET.get('page')
     page = book_paginator.get_page(page_num)
-    print('questions', questions)
-    # print('page', page)
-    # print('book_paginator', book_paginator)
-    # print('page_num', page_num)
-     
-    context = {
-        'questions': questions,
-        # 'department':results,
-        # 'topic':topics,
-        # 'role':roles,
-        'count': book_paginator.count,
-        'page' : page 
-          }
     
-    if 'skip' in request.POST:
-            return HttpResponse('skip is clicked!!!')
-    return render(request,"departmentfilter.html", context)
-
-
-def detail(request): 
-    results = request.GET.get('department')
-    roles = request.GET.get('role')
-    topics = request.GET.get('topic')
+    if request.method == 'POST':
+        print(request.POST)
+        questions=Test.objects.filter(department=department,role=role,topic=topic)
+        score=0
+        wrong=0
+        correct=0
+        total=0
+        for q_page in questions:
+            total+=1
+            print(request.POST.get(q_page.question))
+            print(q_page.answeroption)
+            print()
+            if q_page.answeroption == request.POST.get(q_page.question):
+                score+=10
+                correct+=1
+            else:
+                wrong+=1
+        percent = score/(total*10) *100
+        context = {
+            'score':score,
+            'time': request.POST.get('timer'),
+            'correct':correct,
+            'wrong':wrong,
+            'percent':percent,
+            'total':total
+        }
+        return render(request,'submit.html',context)
+    else:
+        questions=Test.objects.filter(department=department,role=role,topic=topic)
+        context = {
+            'questions':questions,
+            'count': book_paginator.count,
+            'page' : page 
+        }
     
-
-    questions = Test.objects.filter(department=results, role=roles, topic=topics)
-    questions = Answer.object.POST.all()   
-    questions.save()
-    return render(request,'detail.html')
+    return render(request,"departmentfilter.html",context)
  
+   
 
 
-def add(request):
-    return render(request,"addquestion.html")
 
 
-def addrecord(request):
-  department = request.POST['department']
-  role = request.POST['role']
-  topic = request.POST['topic']
-  question = request.POST['question']
-  answeroption = request.POST['answeroption']
-  a = request.POST['a']
-  b = request.POST['b']
-  c = request.POST['c']
-  d = request.POST['d']
-
-  member = Test(department = department, role=role,topic=topic,question=question,answeroption=answeroption,a=a,b=b,c=c,d=d)
-  member.save()
-  return redirect('/')
 
 
-def result(request):
-  question = Test.objects.all()
-  context = {
-    'question': question,
-  }
-  return render(request,"result.html",context)
 
     
 class BookApiView(ModelViewSet):
@@ -236,4 +195,7 @@ class BookApiView(ModelViewSet):
 
 
 
+#    (department='IT', role='PYTHON', topic=' AWARENESS')
    
+# (department='ACCOUNTS', role='ACCOUNTANT', topic='ACCOUNTANCY')
+# (department='SALES', role='MARKETING', topic='PRODUCT AWARENESS')
