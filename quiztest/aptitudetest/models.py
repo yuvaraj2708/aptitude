@@ -39,9 +39,9 @@ class Topic(models.Model):
 
 
 class Test(models.Model):
-    department = models.CharField(max_length=50, null=True ,blank=True)
-    role = models.CharField(max_length=50, null=True ,blank=True)
-    topic = models.CharField(max_length=50, null=True ,blank=True)
+    department = models.CharField(max_length=100, blank=True, null=True)
+    role = models.CharField(max_length=100, blank=True, null=True)
+    topic = models.CharField(max_length=100, blank=True, null=True)
     question = models.CharField(max_length=255, null=True ,blank=True)
     answeroption=models.CharField(max_length=200,blank=True,null=True)
     a = models.CharField(max_length=50, null=True ,blank=True)
@@ -55,20 +55,5 @@ class Test(models.Model):
         return self.department
 
 
-class AptituteTest(models.Model):
-    question_number = models.IntegerField(blank=True,null=True)
-    testqueestion = models.ForeignKey(Test, on_delete=models.DO_NOTHING, related_name='test_question')
-    candidate = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='candidate', blank=True, null=True)
-    started_on = models.DateTimeField()
-    ended_on = models.DateTimeField()
-
-    def __str__(self):
-        return f'Question {self.testqueestion.question} asked to {self.candidate.username}'
 
 
-class Answer(models.Model):
-    department = models.ForeignKey(Department, on_delete=models.CASCADE, null=True)
-    Role = models.ForeignKey(Role, on_delete=models.CASCADE, null=True)
-    topic = models.ForeignKey(Topic, on_delete=models.CASCADE, null=True)
-    question = models.ForeignKey(Test, on_delete=models.CASCADE, null=True)
-    

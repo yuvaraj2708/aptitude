@@ -1,0 +1,12 @@
+{% extends "base1.html" %}
+{% block content %}
+{% for test_result in test_results %}
+    <p>Question: {{ test_result.question.question }}</p>
+    <p>Answer: {{ test_result.answeroption }}</p>
+    {% if test_result.is_correct %}
+        <p>Correct</p>
+    {% else %}
+        <p>Incorrect</p>
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "base1.html" %}
+{% block content %}
+
+<html>
+    <head>
+
+    </head>
+    <body>
+        {% load my_extras %}
+        <form method = "get">
+            {{ filtered_Test.form.as_p }}
+            <input type="submit" value="Press">
+        </form>
+        
+        {% for q_page in page %}
+           
+            <h2>{{q_page.department}}
+                {{q_page.role}}
+                {{q_page.topic}}   <br>  
+                
+        {{ q_page.question }}
+        
+          <br> 
+   <input type="radio" required name="answer" class="mr-3">A. {{ q_page.a }}<br>
+   <input type="radio" required name="answer" class="mr-3">B. {{ q_page.b }}<br>
+   <input type="radio" required name="answer" class="mr-3">C. {{ q_page.c }}<br>
+   <input type="radio" required name="answer" class="mr-3">D. {{ q_page.d }}<br>
+ </div>    
+           </h2>
+           {% endfor %}
+             <div class="page-links">
+        {% if page.has_previous %}
+        <a href="{% my_url 1 'page request.GET.urlencode %}">&laquo; First</a>
+        <a href="{% my_url page.previous_page_number 'page' request.GET.urlencode %}">previous</a>
+        {% endif %}
+
+        <span class = "current">
+            Page {{page.number}} of {{page.paginator.num_pages}}
+            </span>
+
+        {% if page.has_next %}
+                    <a href="?page={{ page.next_page_number}} ">Next</a>
+                    <a href="?page={{ page.paginator.num_pages}} ">&raquo; Last</a>
+        {% endif %}
+        </span>
+    </div>
+          
+        </body>
+</html>
+{% endblock %}
+<!-- <div class="page-links">
+    {% if page.has_previous %}
+    <a href="{% url 'filter' %}?page={{ page.previous_page_number }}">Previous Page</a>
+    {% endif %}
+    {% if page.has_next %}
+    <a href="{% url 'filter' %}?page={{ page.next_page_number }}">Next Page</a>
+    {% endif %}
+</div> -->
